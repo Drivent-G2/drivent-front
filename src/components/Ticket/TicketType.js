@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function TicketType(params) {
-  const { ticketsTypeList } = params;
+  const { ticketsTypeList, setSelectTicket, selectTicket } = params;
 
   const [ticketsList, setTicketsList] = React.useState([]);
   
@@ -14,12 +14,10 @@ export default function TicketType(params) {
     }
   }, [ticketsTypeList]);
   
-  const [selectTicket, setSelectTicket] = React.useState(0);
-
   return (
     <TicketTypeContainer> 
       {ticketsList.map(t => {
-        if(selectTicket === t.id) { 
+        if(selectTicket.id === t.id) { 
           return (
             <div className="ticket selectTicket" key={t.id} >
               <h1>{t.name}</h1>
@@ -28,7 +26,7 @@ export default function TicketType(params) {
           );
         } else {
           return (
-            <div className="ticket dontSelectTicket" key={t.id} onClick={() => setSelectTicket(t.id)} >
+            <div className="ticket dontSelectTicket" key={t.id} onClick={() => setSelectTicket(t)} >
               <h1>{t.name}</h1>
               <h2>R$ {t.price},00</h2>
             </div>
