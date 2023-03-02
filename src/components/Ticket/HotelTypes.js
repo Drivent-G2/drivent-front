@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-export default function HotelType(params) {
-  const { ticketsTypeList, setSelectTicket, selectTicket } = params;
+export default function HotelTypes(params) {
+  const { ticketsTypeList, selectTicket, selectHotel, setSelectHotel } = params;
 
   const [ticketsList, setTicketsList] = React.useState([]);
-  const [selectHotel, setSelectHotel] = React.useState([]);
 
   console.log(ticketsList);
   const hotels = [
@@ -21,7 +20,7 @@ export default function HotelType(params) {
     }
   }, [ticketsTypeList]);
 
-  if (selectTicket.name !== 'Presencial') {
+  if (selectTicket.name !== 'Presencial' || selectTicket.includesHotel === false) {
     return <h1></h1>;
   } else {
     return (
@@ -29,14 +28,14 @@ export default function HotelType(params) {
         {hotels.map((t) => {
           if (selectHotel.id === t.id) {
             return (
-              <div className="ticket selectTicket" key={t.id}>
+              <div className="hotel selectHotel" key={t.id}>
                 <h1>{t.name}</h1>
                 <h2>R$ {t.price},00</h2>
               </div>
             );
           } else {
             return (
-              <div className="ticket dontSelectTicket" key={t.id} onClick={() => setSelectHotel(t)}>
+              <div className="hotel dontSelectHotel" key={t.id} onClick={() => setSelectHotel(t)}>
                 <h1>{t.name}</h1>
                 <h2>R$ {t.price},00</h2>
               </div>
@@ -51,14 +50,14 @@ export default function HotelType(params) {
 const TicketTypeContainer = styled.div`
   margin-top: 15px;
   display: flex;
-  .selectTicket {
+  .selectHotel {
     background-color: #ffeed2;
   }
 
-  .dontSelectTicket {
+  .dontSelectHotel {
     border: 1px solid #cecece;
   }
-  .ticket {
+  .hotel {
     width: 145px;
     height: 145px;
     border-radius: 20px;

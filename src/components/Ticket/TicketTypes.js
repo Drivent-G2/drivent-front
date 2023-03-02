@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-export default function TicketType(params) {
+export default function TicketTypes(params) {
   const { ticketsTypeList, setSelectTicket, selectTicket } = params;
 
   const [ticketsList, setTicketsList] = React.useState([]);
@@ -58,6 +58,7 @@ const TicketTypeContainer = styled.div`
     margin-right:24px;
     font-weight:400;
     font-family: 'Roboto';
+    cursor: pointer;
     h1 {
       font-size:16px;
       color: #454545;
