@@ -1,20 +1,31 @@
 import styled from 'styled-components';
-
+ 
 export default function TicketOverviewAndPayment(params) {
   const { selectTicket, selectHotel } = params;
   return (
-    <TicketAndPaymentContainer>
-      <h2>Ingresso escolhido</h2>
-      <div className="ticketOverview">
-        <h1>{selectHotel ? `${selectTicket.name} + ${selectHotel.name}` : `${selectTicket.name}`}</h1>
-        <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
-      </div>
-    </TicketAndPaymentContainer>
+    <>
+      <TicketAndPaymentContainer>
+        <h2>Ingresso escolhido</h2>
+        <div className="ticketOverview">
+          <h1>{selectHotel ? `${selectTicket.name} + ${selectHotel.name}` : `${selectTicket.name}`}</h1>
+          <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
+        </div>
+      </TicketAndPaymentContainer>
+      <CreditCardContainer>
+        <h2>Pagamento</h2>
+        <div>
+          
+        </div>
+      </CreditCardContainer>
+    </>
   );
 }
 
+// CreditCardContainer
+
 const TicketAndPaymentContainer = styled.div`
   margin-top: 35px;
+  background-color:red;
   .ticketOverview {
     margin-top:15px;
     width: 300px;
@@ -38,4 +49,10 @@ const TicketAndPaymentContainer = styled.div`
       color: #898989;
     }
   }
+`;
+
+const CreditCardContainer = styled.div`
+  background-color:blue;
+  width:100%;
+  height:300px;
 `;

@@ -13,6 +13,8 @@ export default function Payment() {
   const [selectTicket, setSelectTicket] = React.useState(0);
   const [selectHotel, setSelectHotel] = React.useState(0);
 
+  const [cardInfoIsComplete, setCardInfoIsComplete] = React.useState(false);
+
   useEffect(async() => {
     try {
       await getPersonalInformations(userData.token);
@@ -73,7 +75,7 @@ const PaymentContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     .advise {
       font-family: 'Roboto';
       font-style: normal;
