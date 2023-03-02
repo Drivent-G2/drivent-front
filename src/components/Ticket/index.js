@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useTicketsType from '../../hooks/api/useTicketsType';
-import TicketType from './TicketType';
-import HotelType from './HotelType';
+import TicketTypes from './TicketTypes';
+import HotelTypes from './HotelTypes';
 
 export default function Ticket(params) {
+  const { setIsTicketComplete, selectTicket, setSelectTicket, selectHotel, setSelectHotel } = params;
   const ticketsTypeList = useTicketsType();
-  const [selectTicket, setSelectTicket] = React.useState(0);
   const [textHotel, setTextHotel] = React.useState('');
+  const [textOverview, setTextOverview] = React.useState('');
+
+  // Daria para transformar isso em um só UseEffect?
 
   useEffect(() => {
     if(selectTicket.name !== 'Presencial') {
@@ -15,16 +18,36 @@ export default function Ticket(params) {
     }else{
       setTextHotel('Ótimo! Agora escolha sua modalidade de hospedagem');
     }
+    if (selectTicket.name === 'Remoto' || selectTicket.name === 'Online') {
+      setSelectHotel(0);
+    }
   }, [selectTicket]);
+
+  useEffect(() => {
+    if (selectTicket.name === 'Remoto' || selectTicket.name === 'Online') {
+      setSelectHotel(0);
+      setTextOverview(`Fechado, o total ficou em R$${selectTicket.price}. Agora é só confirmar`);
+    } else if (selectTicket.name === 'Presencial' && selectHotel) {
+      setTextOverview(`Fechado, o total ficou em R$${selectTicket.price + selectHotel.price}. Agora é só confirmar`);
+    } else if (selectTicket.name === 'Presencial' && !selectHotel) {
+      setTextOverview('');
+    }
+  }, [selectTicket, selectHotel]);
+
+  //-------------------------------------------------
 
   return (
     <TicketContainer>
       <h2>Primeiro, escolha sua modalidade de ingresso</h2>
-      <TicketType ticketsTypeList={ ticketsTypeList } selectTicket={selectTicket} setSelectTicket={setSelectTicket} />
+      <TicketTypes ticketsTypeList={ ticketsTypeList } selectTicket={selectTicket} setSelectTicket={setSelectTicket} />
       <HotelChoice>
         <h2>{textHotel}</h2>
-        <HotelType ticketsTypeList={ ticketsTypeList } selectTicket={selectTicket} setSelectTicket={setSelectTicket} />
+        <HotelTypes ticketsTypeList={ ticketsTypeList } selectTicket={selectTicket} selectHotel={selectHotel} setSelectHotel={setSelectHotel} />
       </HotelChoice>
+      <OrderOverview>
+        <h2>{textOverview}</h2>
+        {textOverview.length > 0 && <button onClick={() => setIsTicketComplete(true)} className='reserveTicket'>RESERVAR INGRESSO</button>}
+      </OrderOverview>
     </TicketContainer>
   );
 };
@@ -35,4 +58,15 @@ const TicketContainer = styled.div`
 
 const HotelChoice = styled.div`
   margin-top:35px;
+`;
+
+const OrderOverview = styled.div`
+  margin-top:35px;
+  .reserveTicket {
+    border: none;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    cursor: pointer;
+  }
 `;
