@@ -1,15 +1,21 @@
 import styled from 'styled-components';
-
+import React from 'react';
+import CreditCardForm from './CreditCardForm';
+ 
 export default function TicketOverviewAndPayment(params) {
   const { selectTicket, selectHotel } = params;
+
   return (
-    <TicketAndPaymentContainer>
-      <h2>Ingresso escolhido</h2>
-      <div className="ticketOverview">
-        <h1>{selectHotel ? `${selectTicket.name} + ${selectHotel.name}` : `${selectTicket.name}`}</h1>
-        <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
-      </div>
-    </TicketAndPaymentContainer>
+    <>
+      <TicketAndPaymentContainer>
+        <h2>Ingresso escolhido</h2>
+        <div className="ticketOverview">
+          <h1>{selectHotel ? `${selectTicket.name} + ${selectHotel.name}` : `${selectTicket.name}`}</h1>
+          <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
+        </div>
+      </TicketAndPaymentContainer>
+      <CreditCardForm/>
+    </>
   );
 }
 
@@ -39,3 +45,4 @@ const TicketAndPaymentContainer = styled.div`
     }
   }
 `;
+
