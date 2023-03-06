@@ -22,7 +22,6 @@ import { UserProvider } from './contexts/UserContext';
 import useToken from './hooks/useToken';
 
 export default function App() {
-  const [selectHotel, setSelectHotel] = React.useState(0);
   return (
     <>
       <ToastContainer />
@@ -43,7 +42,7 @@ export default function App() {
                 }
               >
                 <Route path="subscription" element={<FillSubscription />} />
-                <Route path="payment" element={<Payment selectHotel={selectHotel} setSelectHotel={setSelectHotel}/>} />
+                <Route path="payment" element={<Payment />} />
                 <Route path="hotel" element={<Hotel />} />
                 <Route path="activities" element={<Activities />} />
                 <Route path="certificate" element={<Certificate />} />
