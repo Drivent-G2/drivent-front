@@ -6,7 +6,6 @@ export default function HotelTypes(params) {
 
   const [ticketsList, setTicketsList] = React.useState([]);
 
-  console.log(ticketsList);
   const hotels = [
     { id: 3, name: 'Sem Hotel', price: 0 },
     { id: 2, name: 'com Hotel', price: 200 },

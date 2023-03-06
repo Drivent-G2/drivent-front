@@ -5,6 +5,7 @@ import Ticket from '../../../components/Ticket';
 import TicketOverviewAndPayment from '../../../components/Payment';
 import UserContext from '../../../contexts/UserContext';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
+import { getTicketUserInformations } from '../../../services/ticketApi';
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
@@ -22,16 +23,36 @@ export default function Payment() {
     }
   });
 
+  useEffect(async() => {
+    try {
+      const ticket = await getTicketUserInformations(userData.token);
+
+      console.log(ticket);
+
+      if (!ticket) {
+        setIsTicketComplete(false);
+        console.log('não tem ticket');
+      } else {
+        setSelectTicket(ticket.TicketType);
+        setIsTicketComplete(true);
+        console.log(selectHotel);
+      }
+    } catch (err) {
+      setIsTicketComplete(false);
+    }
+  }, []);
+
   return (
     <TicketAndPayment>
       <Title>Ingresso e Pagamento</Title>
       <PaymentContainer>
-        {!enroll &&  
+        {!enroll && (
           <div className="center">
             <h1 className="advise">Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</h1>
-          </div>}
+          </div>
+        )}
         {enroll && !isTicketComplete && (
-          <Ticket 
+          <Ticket
             setIsTicketComplete={setIsTicketComplete}
             selectTicket={selectTicket}
             setSelectTicket={setSelectTicket}
@@ -39,12 +60,7 @@ export default function Payment() {
             setSelectHotel={setSelectHotel}
           />
         )}
-        {isTicketComplete && 
-          <TicketOverviewAndPayment
-            selectTicket={selectTicket}
-            selectHotel={selectHotel}
-          />
-        }
+        {isTicketComplete && <TicketOverviewAndPayment selectTicket={selectTicket} selectHotel={selectHotel} />}
       </PaymentContainer>
     </TicketAndPayment>
   );
@@ -73,7 +89,7 @@ const PaymentContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .advise {
       font-family: 'Roboto';
       font-style: normal;
