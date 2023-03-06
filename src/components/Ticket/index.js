@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useTicketsType from '../../hooks/api/useTicketsType';
 import TicketTypes from './TicketTypes';
-import HotelTypes from './HotelTypes';
+import HotelTypes from './HotelTypes'; 
 
 export default function Ticket(params) {
   const { setIsTicketComplete, selectTicket, setSelectTicket, selectHotel, setSelectHotel } = params;

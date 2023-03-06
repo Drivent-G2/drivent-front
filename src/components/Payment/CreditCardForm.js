@@ -4,12 +4,18 @@ import 'react-credit-cards/es/styles-compiled.css';
 import React from 'react';
 
 export default function CreditCardForm(params) {
-  const { setIsCreditCardComplete } = params;
+  const { ticketIsPaid, setIsCreditCardComplete } = params;
   const [cardNumber, setCardNumber] = React.useState('');
   const [cardName, setCardName] = React.useState('');
   const [cardExpiry, setCardExpiry] = React.useState('');
   const [cvv, setCvv] = React.useState('');
   const [focus, setFocus] = React.useState('');
+
+  if(ticketIsPaid) {
+    setIsCreditCardComplete(true);
+  }
+
+  console.log('Aqui é creditCard:', ticketIsPaid);
     
   const validation = cardNumber.length === 16 && cardName.length >= 3 && cardExpiry.length === 4 && cvv.length === 3;
   

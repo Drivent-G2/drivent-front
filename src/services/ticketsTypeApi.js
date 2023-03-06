@@ -8,4 +8,4 @@ export async function getTicketsType(token) {
   });
   
   return response.data;
-};
+}; 

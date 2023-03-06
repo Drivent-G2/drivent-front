@@ -5,7 +5,7 @@ import Ticket from '../../../components/Ticket';
 import TicketOverviewAndPayment from '../../../components/Payment';
 import UserContext from '../../../contexts/UserContext';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
-
+ 
 export default function Payment() {
   const { userData } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
