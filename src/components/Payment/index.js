@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 import React from 'react';
 import CreditCardForm from './CreditCardForm';
+import PaymentConfirmed from './PaymentConfirmed';
  
 export default function TicketOverviewAndPayment(params) {
   const { selectTicket, selectHotel } = params;
+  const [isCreditCardComplete, setIsCreditCardComplete] = React.useState(false);
 
   return (
-    <>
-      <TicketAndPaymentContainer>
-        <h2>Ingresso escolhido</h2>
-        <div className="ticketOverview">
-          <h1>{selectHotel ? `${selectTicket.name} + ${selectHotel.name}` : `${selectTicket.name}`}</h1>
-          <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
-        </div>
-      </TicketAndPaymentContainer>
-      <CreditCardForm/>
-    </>
+    <TicketAndPaymentContainer>
+      <h2>Ingresso escolhido</h2>
+      <div className="ticketOverview">
+        <h1>{selectHotel ? `${selectTicket.name} + ${selectHotel.name}` : `${selectTicket.name}`}</h1>
+        <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
+      </div>
+      <h2>Pagamento</h2>
+      {isCreditCardComplete ? <PaymentConfirmed/> : <CreditCardForm setIsCreditCardComplete={setIsCreditCardComplete}/>}
+    </TicketAndPaymentContainer>
+
   );
 }
 
@@ -23,6 +25,7 @@ const TicketAndPaymentContainer = styled.div`
   margin-top: 35px;
   .ticketOverview {
     margin-top:15px;
+    margin-bottom: 35px;
     width: 300px;
     height: 145px;
     border-radius: 20px;

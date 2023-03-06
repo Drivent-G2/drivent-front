@@ -3,29 +3,32 @@ import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import React from 'react';
 
-export default function CreditCardForm() {
+export default function CreditCardForm(params) {
+  const { setIsCreditCardComplete } = params;
   const [cardNumber, setCardNumber] = React.useState('');
   const [cardName, setCardName] = React.useState('');
-  const [cardExpiy, setCardExpiry] = React.useState('');
+  const [cardExpiry, setCardExpiry] = React.useState('');
   const [cvv, setCvv] = React.useState('');
   const [focus, setFocus] = React.useState('');
     
-  const validation = cardNumber.length === 16 && cardName.length >= 3 && cardExpiy.length === 4 && cvv.length === 3;
+  const validation = cardNumber.length === 16 && cardName.length >= 3 && cardExpiry.length === 4 && cvv.length === 3;
   
   function submit() {
-    if( validation ) console.log('Tudo válid');
+    if( validation ) {
+      setIsCreditCardComplete(true);
+      console.log('Tudo válido');
+    } else {
+      alert('Preencha os dados corretamente!');
+    }
   };
   
   return (
     <>
       <CreditCardContainer>
-
-        <h2>Pagamento</h2>
-
         <div className='creditCardInfo'>
             
           <div>
-            <Cards cvc = { cvv } expiry = { cardExpiy } focused = { focus } name = { cardName } number = { cardNumber } />
+            <Cards cvc = { cvv } expiry = { cardExpiry } focused = { focus } name = { cardName } number = { cardNumber } />
           </div>
 
           <div className='form'>
@@ -36,7 +39,7 @@ export default function CreditCardForm() {
             </div>
 
             <div className='lowInputs' >
-              <input className='validInput' type='tel' name='expiry' maxLength={4} value = { cardExpiy } placeholder = 'Valid Thru' onChange = { e => setCardExpiry(e.target.value.replace(/[A-Ça-ç!-/ ]/g, ''))} onFocus = { e => setFocus(e.target.name) }/> 
+              <input className='validInput' type='tel' name='expiry' maxLength={4} value = { cardExpiry } placeholder = 'Valid Thru' onChange = { e => setCardExpiry(e.target.value.replace(/[A-Ça-ç!-/ ]/g, ''))} onFocus = { e => setFocus(e.target.name) }/> 
               <input className='cvvInput' maxLength={3} type='tel' name='cvc' value = { cvv } placeholder = 'CVC' onChange = { e => setCvv(e.target.value.replace(/[A-Ça-ç!-/ ]/g, ''))} onFocus = { e => setFocus(e.target.name) }/> 
             </div>
 
