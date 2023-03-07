@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import UserContext from '../../contexts/UserContext';
 import styled from 'styled-components';
 import useTicketsType from '../../hooks/api/useTicketsType';
 import TicketTypes from './TicketTypes';
-import HotelTypes from './HotelTypes'; 
+import HotelTypes from './HotelTypes';
+import { postUserTicket } from '../../services/ticketApi';
 
 export default function Ticket(params) {
+  const { userData } = useContext(UserContext);
   const { setIsTicketComplete, selectTicket, setSelectTicket, selectHotel, setSelectHotel } = params;
   const ticketsTypeList = useTicketsType();
   const [textHotel, setTextHotel] = React.useState('');
@@ -36,6 +39,15 @@ export default function Ticket(params) {
 
   //-------------------------------------------------
 
+  async function submitIngress(ticketTypeId, token) {
+    try {
+      await postUserTicket({ ticketTypeId }, token );
+      setIsTicketComplete(true);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
   return (
     <TicketContainer>
       <h2>Primeiro, escolha sua modalidade de ingresso</h2>
@@ -46,7 +58,7 @@ export default function Ticket(params) {
       </HotelChoice>
       <OrderOverview>
         <h2>{textOverview}</h2>
-        {textOverview.length > 0 && <button onClick={() => setIsTicketComplete(true)} className='reserveTicket'>RESERVAR INGRESSO</button>}
+        {textOverview.length > 0 && <button onClick={() => submitIngress(selectTicket.id, userData.token)} className='reserveTicket'>RESERVAR INGRESSO</button>}
       </OrderOverview>
     </TicketContainer>
   );
