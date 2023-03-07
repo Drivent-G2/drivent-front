@@ -5,7 +5,7 @@ import PaymentConfirmed from './PaymentConfirmed';
 import { usePayment, useProcessTicketPayment } from '../../hooks/api/usePayment';
   
 export default function TicketOverviewAndPayment(params) {
-  const { selectTicket, selectHotel } = params;
+  const { selectTicket, selectHotel, setPaymentConfirmation } = params;
   const [isCreditCardComplete, setIsCreditCardComplete] = React.useState(false);
   const ticketIsPaid = usePayment(selectTicket.id);
 
@@ -27,7 +27,7 @@ export default function TicketOverviewAndPayment(params) {
         <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
       </div>
       <h2>Pagamento</h2>
-      {isCreditCardComplete ? <PaymentConfirmed/> : <CreditCardForm setIsCreditCardComplete={setIsCreditCardComplete} ticketIsPaid={ticketIsPaid} setCardParams={setCardParams} />}
+      {isCreditCardComplete ? <PaymentConfirmed/> : <CreditCardForm setIsCreditCardComplete={setIsCreditCardComplete} ticketIsPaid={ticketIsPaid} setCardParams={setCardParams} setPaymentConfirmation={setPaymentConfirmation}/>}
     </TicketAndPaymentContainer>
 
   );

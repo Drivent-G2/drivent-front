@@ -4,7 +4,7 @@ import 'react-credit-cards/es/styles-compiled.css';
 import React from 'react';
 
 export default function CreditCardForm(params) {
-  const { ticketIsPaid, setIsCreditCardComplete, setCardParams } = params;
+  const { ticketIsPaid, setIsCreditCardComplete, setCardParams, setPaymentConfirmation } = params;
   const [cardNumber, setCardNumber] = React.useState('');
   const [cardName, setCardName] = React.useState('');
   const [cardExpiry, setCardExpiry] = React.useState('');
@@ -13,6 +13,7 @@ export default function CreditCardForm(params) {
 
   if(ticketIsPaid) {
     setIsCreditCardComplete(true);
+    setPaymentConfirmation(true);
   };
     
   const validation = cardNumber.length === 16 && cardName.length >= 3 && cardExpiry.length === 4 && cvv.length === 3;
@@ -26,12 +27,9 @@ export default function CreditCardForm(params) {
         expirationDate: cardExpiry,
         cvv: cvv
       };
-
       setCardParams(cardParams);
-
       setIsCreditCardComplete(true);
-
-      console.log('Tudo válido');
+      // console.log('Tudo válido');
     } else {
       alert('Preencha os dados corretamente!');
     }
