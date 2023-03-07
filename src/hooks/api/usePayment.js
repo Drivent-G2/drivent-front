@@ -13,11 +13,7 @@ export function usePayment(id) {
 export async function useProcessTicketPayment(id, cardParams) {
   const token = useToken();
 
-  console.log('chegou no processameto do ticket, toma id e card', id, cardParams, token);
-
   const paymentProcess = await processTicketPayment(token, id, cardParams);
-
-  console.log('processou tudo');
 
   return paymentProcess;
 }

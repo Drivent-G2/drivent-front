@@ -12,11 +12,7 @@ export default function TicketOverviewAndPayment(params) {
   const [cardParams, setCardParams] = React.useState({ number: undefined });
 
   if(cardParams.number) {
-    console.log('antes if', cardParams, !!cardParams);
-
     useProcessTicketPayment(selectTicket.id, cardParams);
-
-    console.log('if terminou');
   };
 
   return (
