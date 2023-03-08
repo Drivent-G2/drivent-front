@@ -56,4 +56,3 @@ const TicketAndPaymentContainer = styled.div`
     }
   }
 `;
-

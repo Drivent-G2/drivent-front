@@ -3,19 +3,20 @@ import React from 'react';
 import styled from 'styled-components';
 import Ticket from '../../../components/Ticket';
 import TicketOverviewAndPayment from '../../../components/Payment';
-import UserContext from '../../../contexts/UserContext'; 
+import UserContext from '../../../contexts/UserContext';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
 import { getTicketUserInformations } from '../../../services/ticketApi';
 import paymentContext from '../../../contexts/paymentContext';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
   const [isTicketComplete, setIsTicketComplete] = useState(false);
   const [selectTicket, setSelectTicket] = React.useState(0);
-  const [selectHotel, setSelectHotel] = React.useState(0);
   const { setPaymentConfirmation } = useContext(paymentContext);
-
+  const [selectHotel, setSelectHotel] = useLocalStorage('chave', 'valor inicial');
+  console.log(selectHotel, 'local storage');
   useEffect(async() => {
     try {
       await getPersonalInformations(userData.token);
@@ -57,7 +58,13 @@ export default function Payment() {
             setSelectHotel={setSelectHotel}
           />
         )}
-        {isTicketComplete && <TicketOverviewAndPayment selectTicket={selectTicket} selectHotel={selectHotel} setPaymentConfirmation={setPaymentConfirmation}/>}
+        {isTicketComplete && (
+          <TicketOverviewAndPayment
+            selectTicket={selectTicket}
+            selectHotel={selectHotel}
+            setPaymentConfirmation={setPaymentConfirmation}
+          />
+        )}
       </PaymentContainer>
     </TicketAndPayment>
   );
