@@ -3,9 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Ticket from '../../../components/Ticket';
 import TicketOverviewAndPayment from '../../../components/Payment';
-import UserContext from '../../../contexts/UserContext';
+import UserContext from '../../../contexts/UserContext'; 
 import { getPersonalInformations } from '../../../services/enrollmentApi';
 import { getTicketUserInformations } from '../../../services/ticketApi';
+import paymentContext from '../../../contexts/paymentContext';
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
@@ -13,6 +14,7 @@ export default function Payment() {
   const [isTicketComplete, setIsTicketComplete] = useState(false);
   const [selectTicket, setSelectTicket] = React.useState(0);
   const [selectHotel, setSelectHotel] = React.useState(0);
+  const { setPaymentConfirmation } = useContext(paymentContext);
 
   useEffect(async() => {
     try {
@@ -26,16 +28,11 @@ export default function Payment() {
   useEffect(async() => {
     try {
       const ticket = await getTicketUserInformations(userData.token);
-
-      console.log(ticket);
-
       if (!ticket) {
         setIsTicketComplete(false);
-        console.log('não tem ticket');
       } else {
         setSelectTicket(ticket.TicketType);
         setIsTicketComplete(true);
-        console.log(selectHotel);
       }
     } catch (err) {
       setIsTicketComplete(false);
@@ -60,7 +57,7 @@ export default function Payment() {
             setSelectHotel={setSelectHotel}
           />
         )}
-        {isTicketComplete && <TicketOverviewAndPayment selectTicket={selectTicket} selectHotel={selectHotel} />}
+        {isTicketComplete && <TicketOverviewAndPayment selectTicket={selectTicket} selectHotel={selectHotel} setPaymentConfirmation={setPaymentConfirmation}/>}
       </PaymentContainer>
     </TicketAndPayment>
   );
