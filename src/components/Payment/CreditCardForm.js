@@ -6,10 +6,9 @@ import UserContext from '../../contexts/UserContext';
 import { useContext } from 'react';
 import useToken from '../../hooks/useToken';
 import { processTicketPayment } from '../../services/paymentApi';
-import { useNavigate } from 'react-router-dom';
 
 export default function CreditCardForm(params) {
-  const { setCardParams, ticket } = params;
+  const { ticket } = params;
   const { setPaymentConfirmation } = useContext(UserContext);
   const [cardNumber, setCardNumber] = React.useState('');
   const [cardName, setCardName] = React.useState('');
@@ -17,7 +16,6 @@ export default function CreditCardForm(params) {
   const [cvv, setCvv] = React.useState('');
   const [focus, setFocus] = React.useState('');
   const token = useToken();
-  const navigate = useNavigate();
 
   const validation = cardNumber.length === 16 && cardName.length >= 3 && cardExpiry.length === 4 && cvv.length === 3;
   
@@ -30,10 +28,9 @@ export default function CreditCardForm(params) {
         expirationDate: cardExpiry,
         cvv: cvv
       };
-      setCardParams(cardParams);
+      console.log(cardParams, ticket.id, token);
       processTicketPayment(token, ticket.id, cardParams);
       setPaymentConfirmation(true);
-      window.location.reload();
       // console.log('Tudo válido');
     } else {
       alert('Preencha os dados corretamente!');
