@@ -1,19 +1,28 @@
 import styled from 'styled-components';
 import React from 'react';
 import UserContext from '../../contexts/UserContext';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import CreditCardForm from './CreditCardForm';
 import PaymentConfirmed from './PaymentConfirmed';
-import { usePayment } from '../../hooks/api/usePayment';
+import { useEffect } from 'react';
+import useToken from '../../hooks/useToken';
+import { getTicketPaymentStatus } from '../../services/paymentApi';
 
 export default function TicketOverviewAndPayment(params) {
   const { paymentConfirmation, setPaymentConfirmation } = useContext(UserContext);
+  const token = useToken();
+  console.log(paymentConfirmation);
 
   const { selectTicket, selectHotel, ticket } = params;
-  const [cardParams, setCardParams] = React.useState({ number: undefined });
-  const ticketIsPaid = usePayment(ticket.id);
 
-  ticketIsPaid ? setPaymentConfirmation(true) : setPaymentConfirmation(false);
+  useEffect(async() => {
+    try {
+      await getTicketPaymentStatus(token, ticket.id);
+      setPaymentConfirmation(true);
+    } catch (error) {
+      setPaymentConfirmation(false);
+    }
+  }, []);
   
   return (
     <TicketAndPaymentContainer>
@@ -27,10 +36,7 @@ export default function TicketOverviewAndPayment(params) {
         <PaymentConfirmed />
       ) : (
         <CreditCardForm
-          ticketIsPaid={ticketIsPaid}
           ticket={ticket}
-          setCardParams={setCardParams}
-          setPaymentConfirmation={setPaymentConfirmation}
         />
       )}
     </TicketAndPaymentContainer>

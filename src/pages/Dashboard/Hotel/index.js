@@ -2,23 +2,28 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import styled from 'styled-components';
-import paymentContext from '../../../contexts/paymentContext';
 import UserContext from '../../../contexts/UserContext';
+import useToken from '../../../hooks/useToken';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
+import { getTicketPaymentStatus } from '../../../services/paymentApi';
 
 export default function Hotel() {
-  const { userData } = useContext(UserContext);
+  const token = useToken();
+  const { userData, ticket } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
-  const { paymentConfirmation } = useContext(paymentContext);
-
+  const { paymentConfirmation, setPaymentConfirmation, selectHotel, selectTicket } = useContext(UserContext);
   useEffect(async() => {
     try {
+      await getTicketPaymentStatus(token, ticket.id);
+      setPaymentConfirmation(true);
       await getPersonalInformations(userData.token);
       setEnroll(true);
     } catch (err) {
       setEnroll(false);
+      setPaymentConfirmation(false);
     }
-  });
+  }, []);
+  console.log(enroll, paymentConfirmation);
   // return 'Hotel: Em breve !'; 
   return (
     <>
@@ -27,6 +32,11 @@ export default function Hotel() {
         {(!enroll || !paymentConfirmation) && (
           <div className="center">
             <h1 className="advise">Você precisa ter confirmado o pagamento antes de fazer a escolha de hospedagem</h1>
+          </div>
+        )}
+        {(!selectTicket.includesHotel || selectHotel.name === 'sem Hotel') && (
+          <div className="center">
+            <h1 className="advise">Você não pode reservar um hotel</h1>
           </div>
         )}
       </HotelContainer>

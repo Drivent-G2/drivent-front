@@ -5,10 +5,11 @@ import useTicketsType from '../../hooks/api/useTicketsType';
 import TicketTypes from './TicketTypes';
 import HotelTypes from './HotelTypes';
 import { postUserTicket } from '../../services/ticketApi';
+import { getTicketUserInformations } from '../../services/ticketApi';
 
 export default function Ticket(params) {
   const { userData } = useContext(UserContext);
-  const { setIsTicketComplete, selectTicket, setSelectTicket, selectHotel, setSelectHotel } = params;
+  const { setIsTicketComplete, selectTicket, setSelectTicket, selectHotel, setSelectHotel, setTicket } = params;
   const ticketsTypeList = useTicketsType();
   const [textHotel, setTextHotel] = React.useState('');
   const [textOverview, setTextOverview] = React.useState('');
@@ -42,6 +43,8 @@ export default function Ticket(params) {
   async function submitIngress(ticketTypeId, token) {
     try {
       await postUserTicket({ ticketTypeId }, token );
+      const ticketData = await getTicketUserInformations(userData.token);
+      setTicket(ticketData);
       setIsTicketComplete(true);
     } catch (err) {
       alert(err);

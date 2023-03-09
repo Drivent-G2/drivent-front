@@ -9,12 +9,9 @@ import { getTicketUserInformations } from '../../../services/ticketApi';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
 export default function Payment() {
-  const { userData } = useContext(UserContext);
+  const { userData, ticket, setTicket, selectTicket, setSelectTicket, selectHotel, setSelectHotel } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
   const [isTicketComplete, setIsTicketComplete] = useState(false);
-  const [selectTicket, setSelectTicket] = React.useState(0);
-  const [ticket, setTicket] = React.useState(0);
-  const [selectHotel, setSelectHotel] = useLocalStorage('selectHotel', 0);
 
   useEffect(async() => {
     try {
@@ -27,12 +24,14 @@ export default function Payment() {
 
   useEffect(async() => {
     try {
-      const ticket = await getTicketUserInformations(userData.token);
-      if (!ticket) {
+      const ticketData = await getTicketUserInformations(userData.token);
+      if (!ticketData) {
         setIsTicketComplete(false);
       } else {
-        setTicket(ticket);
-        setSelectTicket(ticket.TicketType);
+        console.log(ticket);
+        setTicket(ticketData);
+        console.log(ticket);
+        setSelectTicket(ticketData.TicketType);
         setIsTicketComplete(true);
       }
     } catch (err) {
@@ -56,6 +55,7 @@ export default function Payment() {
             setSelectTicket={setSelectTicket}
             selectHotel={selectHotel}
             setSelectHotel={setSelectHotel}
+            setTicket={setTicket}
           />
         )}
         {isTicketComplete && (
