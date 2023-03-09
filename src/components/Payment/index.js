@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 import React from 'react';
+import UserContext from '../../contexts/UserContext';
+import { useContext, useEffect } from 'react';
 import CreditCardForm from './CreditCardForm';
 import PaymentConfirmed from './PaymentConfirmed';
-import { usePayment, useProcessTicketPayment } from '../../hooks/api/usePayment';
-  
+import { usePayment } from '../../hooks/api/usePayment';
+
 export default function TicketOverviewAndPayment(params) {
-  const { selectTicket, selectHotel, setPaymentConfirmation } = params;
-  const [isCreditCardComplete, setIsCreditCardComplete] = React.useState(false);
-  const ticketIsPaid = usePayment(selectTicket.id);
+  const { paymentConfirmation, setPaymentConfirmation } = useContext(UserContext);
 
+  const { selectTicket, selectHotel, ticket } = params;
   const [cardParams, setCardParams] = React.useState({ number: undefined });
+  const ticketIsPaid = usePayment(ticket.id);
 
-  if(cardParams.number) {
-    useProcessTicketPayment(selectTicket.id, cardParams);
-  };
-
+  ticketIsPaid ? setPaymentConfirmation(true) : setPaymentConfirmation(false);
+  
   return (
     <TicketAndPaymentContainer>
       <h2>Ingresso escolhido</h2>
@@ -23,16 +23,24 @@ export default function TicketOverviewAndPayment(params) {
         <h2>{selectHotel ? `R$ ${selectTicket.price + selectHotel.price}` : `R$ ${selectTicket.price}`}</h2>
       </div>
       <h2>Pagamento</h2>
-      {isCreditCardComplete ? <PaymentConfirmed/> : <CreditCardForm setIsCreditCardComplete={setIsCreditCardComplete} ticketIsPaid={ticketIsPaid} setCardParams={setCardParams} setPaymentConfirmation={setPaymentConfirmation}/>}
+      {paymentConfirmation ? (
+        <PaymentConfirmed />
+      ) : (
+        <CreditCardForm
+          ticketIsPaid={ticketIsPaid}
+          ticket={ticket}
+          setCardParams={setCardParams}
+          setPaymentConfirmation={setPaymentConfirmation}
+        />
+      )}
     </TicketAndPaymentContainer>
-
   );
 }
 
 const TicketAndPaymentContainer = styled.div`
   margin-top: 35px;
   .ticketOverview {
-    margin-top:15px;
+    margin-top: 15px;
     margin-bottom: 35px;
     width: 300px;
     height: 145px;
