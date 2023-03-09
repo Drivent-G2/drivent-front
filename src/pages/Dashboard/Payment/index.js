@@ -6,7 +6,6 @@ import TicketOverviewAndPayment from '../../../components/Payment';
 import UserContext from '../../../contexts/UserContext';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
 import { getTicketUserInformations } from '../../../services/ticketApi';
-import paymentContext from '../../../contexts/paymentContext';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
 export default function Payment() {
@@ -14,9 +13,9 @@ export default function Payment() {
   const [enroll, setEnroll] = useState(false);
   const [isTicketComplete, setIsTicketComplete] = useState(false);
   const [selectTicket, setSelectTicket] = React.useState(0);
-  const { setPaymentConfirmation } = useContext(paymentContext);
-  const [selectHotel, setSelectHotel] = useLocalStorage('chave', 'valor inicial');
-  console.log(selectHotel, 'local storage');
+  const [ticket, setTicket] = React.useState(0);
+  const [selectHotel, setSelectHotel] = useLocalStorage('selectHotel', 0);
+
   useEffect(async() => {
     try {
       await getPersonalInformations(userData.token);
@@ -32,6 +31,7 @@ export default function Payment() {
       if (!ticket) {
         setIsTicketComplete(false);
       } else {
+        setTicket(ticket);
         setSelectTicket(ticket.TicketType);
         setIsTicketComplete(true);
       }
@@ -60,9 +60,9 @@ export default function Payment() {
         )}
         {isTicketComplete && (
           <TicketOverviewAndPayment
+            ticket={ticket}
             selectTicket={selectTicket}
             selectHotel={selectHotel}
-            setPaymentConfirmation={setPaymentConfirmation}
           />
         )}
       </PaymentContainer>
