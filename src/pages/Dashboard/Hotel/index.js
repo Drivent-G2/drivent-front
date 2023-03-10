@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import styled from 'styled-components';
+import HotelChoiceContainer from '../../../components/Hotel';
 import UserContext from '../../../contexts/UserContext';
 import useToken from '../../../hooks/useToken';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
@@ -23,9 +24,6 @@ export default function Hotel() {
       setPaymentConfirmation(false);
     }
   }, []);
-  console.log(enroll, paymentConfirmation);
-  // return 'Hotel: Em breve !'; 
-  console.log(selectTicket, selectHotel, 'AQUIII');
   return (
     <>
       <Title> Escolha de hotel e quarto </Title>
@@ -40,6 +38,7 @@ export default function Hotel() {
             <h1 className="advise">Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</h1>
           </div>
         )}
+        {enroll && paymentConfirmation && selectHotel !== 'Sem Hotel' && <HotelChoiceContainer/>}
       </HotelContainer>
     </>
   );
@@ -53,7 +52,6 @@ const Title = styled.div`
 
 const HotelContainer = styled.div`
   width: 100%;
-  height: 100%;
   .center {
     width: 100%;
     height: 100%;
