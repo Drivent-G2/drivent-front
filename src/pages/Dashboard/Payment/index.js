@@ -6,7 +6,6 @@ import TicketOverviewAndPayment from '../../../components/Payment';
 import UserContext from '../../../contexts/UserContext';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
 import { getTicketUserInformations } from '../../../services/ticketApi';
-import useLocalStorage from '../../../hooks/useLocalStorage';
 
 export default function Payment() {
   const { userData, ticket, setTicket, selectTicket, setSelectTicket, selectHotel, setSelectHotel } = useContext(UserContext);

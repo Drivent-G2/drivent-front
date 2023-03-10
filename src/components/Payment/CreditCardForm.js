@@ -28,10 +28,8 @@ export default function CreditCardForm(params) {
         expirationDate: cardExpiry,
         cvv: cvv
       };
-      console.log(cardParams, ticket.id, token);
       processTicketPayment(token, ticket.id, cardParams);
       setPaymentConfirmation(true);
-      // console.log('Tudo válido');
     } else {
       alert('Preencha os dados corretamente!');
     }

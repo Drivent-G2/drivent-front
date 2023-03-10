@@ -9,7 +9,7 @@ export default function HotelsOptions(params) {
         {hotelsOptionsList.map(h => {
           if(h.id === hotelSelectedId) {
             return(
-              <Option select={true} >
+              <Option key={h.id} select={true} >
                 <img src={h.image} alt=''/>
                 <h1> {h.name} </h1>
                 <div>
@@ -24,7 +24,7 @@ export default function HotelsOptions(params) {
             );
           }
           return(
-            <Option onClick={() => setHotelSelectedId(h.id)}>
+            <Option key={h.id} onClick={() => setHotelSelectedId(h.id)}>
               <img src={h.image} alt=''/>
               <h1> {h.name} </h1>
               <div>

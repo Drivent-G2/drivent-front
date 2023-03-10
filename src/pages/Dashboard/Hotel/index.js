@@ -24,7 +24,6 @@ export default function Hotel() {
       setPaymentConfirmation(false);
     }
   }, []);
-
   return (
     <>
       <Title> Escolha de hotel e quarto </Title>
@@ -34,12 +33,12 @@ export default function Hotel() {
             <h1 className="advise">Você precisa ter confirmado o pagamento antes de fazer a escolha de hospedagem</h1>
           </div>
         )}
-        {(!selectTicket.includesHotel || selectHotel.name === 'sem Hotel') && (
+        {(selectTicket.name === 'Online' || selectHotel.name === 'Sem Hotel') && (
           <div className="center">
-            <h1 className="advise">Você não pode reservar um hotel</h1>
+            <h1 className="advise">Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</h1>
           </div>
         )}
-        {enroll && paymentConfirmation && <HotelChoiceContainer/>}
+        {enroll && paymentConfirmation && selectHotel !== 'Sem Hotel' && <HotelChoiceContainer/>}
       </HotelContainer>
     </>
   );
