@@ -1,7 +1,14 @@
 import styled from 'styled-components';
+import { useContext } from 'react';
+import hotelContext from '../../contexts/HotelContext';
 
-export default function HotelsOptions(params) {
-  const { hotelsOptionsList, hotelSelectedId, setHotelSelectedId } = params;
+export default function HotelsOptions({ hotelsOptionsList }) {
+  const { hotelSelectedId, setHotelSelectedId, setIsHotelSelected } = useContext(hotelContext);
+
+  function showRoomInfo() {
+    setIsHotelSelected(true);
+  }
+
   return(
     <HotelsChoice>
       <span className='title'>Primeiro, escolha seu hotel</span>
@@ -9,7 +16,7 @@ export default function HotelsOptions(params) {
         {hotelsOptionsList.map(h => {
           if(h.id === hotelSelectedId) {
             return(
-              <Option key={h.id} select={true} >
+              <Option key={h.id} select={true} onClick={showRoomInfo}>
                 <img src={h.image} alt=''/>
                 <h1> {h.name} </h1>
                 <div>
@@ -24,7 +31,7 @@ export default function HotelsOptions(params) {
             );
           }
           return(
-            <Option key={h.id} onClick={() => setHotelSelectedId(h.id)}>
+            <Option key={h.id} onClick={() => {setHotelSelectedId(h.id); showRoomInfo();}}>
               <img src={h.image} alt=''/>
               <h1> {h.name} </h1>
               <div>

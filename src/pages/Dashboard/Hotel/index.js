@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import styled from 'styled-components';
 import HotelChoiceContainer from '../../../components/Hotel';
+import RoomInfo from '../../../components/Hotel/RoomInfo';
+import hotelContext from '../../../contexts/HotelContext';
 import UserContext from '../../../contexts/UserContext';
 import useToken from '../../../hooks/useToken';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
@@ -13,6 +15,8 @@ export default function Hotel() {
   const { userData, ticket } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
   const { paymentConfirmation, setPaymentConfirmation, selectHotel, selectTicket } = useContext(UserContext);
+  const { isHotelSelected } = useContext(hotelContext);
+
   useEffect(async() => {
     try {
       await getTicketPaymentStatus(token, ticket.id);
@@ -24,6 +28,9 @@ export default function Hotel() {
       setPaymentConfirmation(false);
     }
   }, []);
+
+  console.log(isHotelSelected);
+
   return (
     <>
       <Title> Escolha de hotel e quarto </Title>
@@ -38,8 +45,9 @@ export default function Hotel() {
             <h1 className="advise">Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</h1>
           </div>
         )}
-        {enroll && paymentConfirmation && selectHotel !== 'Sem Hotel' && <HotelChoiceContainer/>}
+        {enroll && paymentConfirmation && selectHotel.name !== 'Sem Hotel' && <HotelChoiceContainer/>}
       </HotelContainer>
+      {isHotelSelected?<RoomInfo/>:''}
     </>
   );
 }
