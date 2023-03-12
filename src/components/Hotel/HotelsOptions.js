@@ -4,7 +4,7 @@ import hotelContext from '../../contexts/HotelContext';
 
 export default function HotelsOptions({ hotelsOptionsList }) {
   const { hotelSelectedId, setHotelSelectedId, setIsHotelSelected } = useContext(hotelContext);
-
+  
   function showRoomInfo() {
     setIsHotelSelected(true);
   }

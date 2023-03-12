@@ -4,9 +4,9 @@ import useToken from '../useToken';
 
 export function useEveryBooking(hotelId) {
   const token = useToken();
-
+  
   const booking = useAsync(() => getEveryBooking(token, hotelId));
 
-  if(!booking.loading)
-    return booking.data.Rooms;
-};
+  if(!booking.loading) 
+    return booking.data;
+}
