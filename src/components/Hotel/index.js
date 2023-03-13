@@ -4,7 +4,7 @@ import HotelsOptions from './HotelsOptions';
 
 export default function HotelChoiceContainer(params) {
   const [hotelsOptionsList, setHotelsOptionsList] = useState([]);
-  const [hotelSelectedId, setHotelSelectedId] = useState(0);
+
   const hotelsList = useHotel();
   
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function HotelChoiceContainer(params) {
 
   return(
     <>
-      <HotelsOptions hotelsOptionsList={hotelsOptionsList} hotelSelectedId={hotelSelectedId} setHotelSelectedId={setHotelSelectedId}/>
+      <HotelsOptions hotelsOptionsList={hotelsOptionsList}/>
     </>
   );
 };

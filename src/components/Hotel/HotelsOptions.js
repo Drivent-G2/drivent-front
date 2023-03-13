@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 import HotelInfo from './HotelInfo';
+import { useContext } from 'react';
+import hotelContext from '../../contexts/HotelContext';
 
-export default function HotelsOptions(params) {
-  const { hotelsOptionsList, hotelSelectedId, setHotelSelectedId } = params;
+export default function HotelsOptions({ hotelsOptionsList }) {
+  const { hotelSelectedId, setHotelSelectedId, setIsHotelSelected } = useContext(hotelContext);
+  
+  function showRoomInfo() {
+    setIsHotelSelected(true);
+  }
+
   return(
     <HotelsChoice>
       <span className='title'>Primeiro, escolha seu hotel</span>
@@ -10,35 +17,15 @@ export default function HotelsOptions(params) {
         {hotelsOptionsList.map(h => {
           if(h.id === hotelSelectedId) {
             return(
-              <HotelInfo h={h} select={true} setHotelSelectedId={setHotelSelectedId} />
-              // <Option key={h.id} select={true} >
-              //   <img src={h.image} alt=''/>
-              //   <h1> {h.name} </h1>
-              //   <div>
-              //     <h2>Tipos de acomodação:</h2>
-              //     <h3>Single e Double</h3>
-              //   </div>
-              //   <div>
-              //     <h2>Vagas disponíveis:</h2>
-              //     <h3>Single e Double</h3>
-              //   </div>
-              // </Option>
+              <Option key={h.id} select={true} onClick={showRoomInfo}>
+                <HotelInfo h={h} />
+              </Option>
             );
           }
           return(
-            <HotelInfo h={h} select={false} setHotelSelectedId={setHotelSelectedId} />
-            // <Option key={h.id} onClick={() => setHotelSelectedId(h.id)}>
-            //   <img src={h.image} alt=''/>
-            //   <h1> {h.name} </h1>
-            //   <div>
-            //     <h2>Tipos çslkfdjg de acomodação:</h2>
-            //     <h3>Single e Double</h3>
-            //   </div>
-            //   <div>
-            //     <h2>Vagas disponíveis:</h2>
-            //     <h3>Single e Double</h3>
-            //   </div>
-            // </Option>
+            <Option key={h.id} onClick={() => {setHotelSelectedId(h.id); showRoomInfo();}}>
+              <HotelInfo h={h} />
+            </Option>
           );
         })}
       </div>
@@ -60,34 +47,34 @@ const HotelsChoice = styled.div`
     }
 `;
 
-// const Option = styled.div`
-//     background-color: ${params => params.select ? '#FFEED2' : '#EBEBEB'};
-//     width: 196px;
-//     height: 264px;
-//     padding: 14px;
-//     box-sizing:border-box;
-//     margin-right: 19px;
-//     border-radius: 10px;
-//     img {
-//         width: 168px;
-//         height: 109px;
-//         border-radius: 5px;
-//     }
-//     h1 {
-//         margin: 10px 0;
-//         font-size: 20px;
-//         font-weight: 400;
-//     }
-//     div {
-//         margin-bottom: 14px;
-//     }
-//     h2 {
-//         font-size: 12px;
-//         font-weight: 700;
-//         margin-bottom: 4px;
-//     }
-//     h3 {
-//         font-size:12px;
-//         font-weight: 400;
-//     }
-// `;
+const Option = styled.div`
+    background-color: ${params => params.select ? '#FFEED2' : '#EBEBEB'};
+    width: 196px;
+    height: 264px;
+    padding: 14px;
+    box-sizing:border-box;
+    margin-right: 19px;
+    border-radius: 10px;
+    img {
+        width: 168px;
+        height: 109px;
+        border-radius: 5px;
+    }
+    h1 {
+        margin: 10px 0;
+        font-size: 20px;
+        font-weight: 400;
+    }
+    div {
+        margin-bottom: 14px;
+    }
+    h2 {
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+    h3 {
+        font-size:12px;
+        font-weight: 400;
+    }
+`;

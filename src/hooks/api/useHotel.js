@@ -1,4 +1,4 @@
-import { getHotel } from '../../services/hotelApi';
+import { getHotel, getHotelRoomsInfo } from '../../services/hotelApi';
 import useAsync from '../useAsync';
 import useToken from '../useToken';
  
@@ -10,7 +10,10 @@ export function useHotel() {
   return hotels.data;
 };
 
-export function getHotelsInfo() {
+export function getHotelsInfo(hotelId) {
   const token = useToken();
-  return('toma o token', token);
+
+  const hotelsInfo = useAsync(() => getHotelRoomsInfo(token, hotelId));
+
+  return hotelsInfo.data;
 };
