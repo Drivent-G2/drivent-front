@@ -3,7 +3,8 @@ import HotelInfo from './HotelInfo';
 import { useContext } from 'react';
 import hotelContext from '../../contexts/HotelContext';
 
-export default function HotelsOptions({ hotelsOptionsList }) {
+export default function HotelsOptions(params) {
+  const { hotelsOptionsList } = params;
   const { hotelSelectedId, setHotelSelectedId, setIsHotelSelected } = useContext(hotelContext);
   
   function showRoomInfo() {
@@ -55,6 +56,7 @@ const Option = styled.div`
     box-sizing:border-box;
     margin-right: 19px;
     border-radius: 10px;
+    cursor: pointer;
     img {
         width: 168px;
         height: 109px;

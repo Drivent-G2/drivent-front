@@ -1,4 +1,4 @@
-import { getHotel, getHotelRoomsInfo } from '../../services/hotelApi';
+import { getHotel, getHotelRoomsInfo, getHotelWithRooms } from '../../services/hotelApi';
 import useAsync from '../useAsync';
 import useToken from '../useToken';
  
@@ -16,4 +16,12 @@ export function getHotelsInfo(hotelId) {
   const hotelsInfo = useAsync(() => getHotelRoomsInfo(token, hotelId));
 
   return hotelsInfo.data;
+};
+
+export function findHotelWithRooms(hotelId) {
+  const token = useToken();
+
+  const hotelRoom = useAsync(() => getHotelWithRooms(token, hotelId) ); 
+
+  return hotelRoom.data;
 };
