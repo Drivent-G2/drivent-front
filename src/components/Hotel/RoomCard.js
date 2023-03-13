@@ -75,6 +75,7 @@ const CardContainer = styled.button`
   border-radius: 10px;
   background-color: ${params => params.color};;
   position: relative;
+  cursor: pointer;
   .capacity{
     display: flex;
     gap: 3px;
