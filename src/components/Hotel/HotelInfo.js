@@ -14,9 +14,10 @@ export default function HotelInfo(params) {
       if(capacity < r.capacity) {
         capacity = r.capacity;
       }
+      freeRooms = freeRooms + r.capacity;
     });
 
-    hotelInfo.map(r => freeRooms = freeRooms+r.guests);
+    hotelInfo.map(r => freeRooms = freeRooms - r.guests);
 
     if(capacity === 3) roomTypeAvalible = 'Single, Double e Triple';
     if(capacity === 2) roomTypeAvalible = 'Single, Double';
