@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import HotelInfo from './HotelInfo';
 import { useContext } from 'react';
 import hotelContext from '../../contexts/HotelContext';
 
@@ -17,31 +18,13 @@ export default function HotelsOptions({ hotelsOptionsList }) {
           if(h.id === hotelSelectedId) {
             return(
               <Option key={h.id} select={true} onClick={showRoomInfo}>
-                <img src={h.image} alt=''/>
-                <h1> {h.name} </h1>
-                <div>
-                  <h2>Tipos de acomodação:</h2>
-                  <h3>Single e Double</h3>
-                </div>
-                <div>
-                  <h2>Vagas disponíveis:</h2>
-                  <h3>Single e Double</h3>
-                </div>
+                <HotelInfo h={h} />
               </Option>
             );
           }
           return(
             <Option key={h.id} onClick={() => {setHotelSelectedId(h.id); showRoomInfo();}}>
-              <img src={h.image} alt=''/>
-              <h1> {h.name} </h1>
-              <div>
-                <h2>Tipos de acomodação:</h2>
-                <h3>Single e Double</h3>
-              </div>
-              <div>
-                <h2>Vagas disponíveis:</h2>
-                <h3>Single e Double</h3>
-              </div>
+              <HotelInfo h={h} />
             </Option>
           );
         })}
