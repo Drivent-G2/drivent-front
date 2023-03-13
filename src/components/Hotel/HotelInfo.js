@@ -10,7 +10,7 @@ export default function HotelInfo(params) {
   let roomTypeAvalible = 'Single';
 
   if(hotelInfo && hotelType) {
-    hotelType.Rooms.map(r => {
+    hotelType.Rooms.forEach(r => {
       if(capacity < r.capacity) {
         capacity = r.capacity;
       }
