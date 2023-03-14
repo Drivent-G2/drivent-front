@@ -13,7 +13,7 @@ export default function Ticket(params) {
   const ticketsTypeList = useTicketsType();
   const [textHotel, setTextHotel] = React.useState('');
   const [textOverview, setTextOverview] = React.useState('');
-
+  
   // Daria para transformar isso em um só UseEffect?
 
   useEffect(() => {

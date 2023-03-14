@@ -11,7 +11,6 @@ import { getTicketPaymentStatus } from '../../services/paymentApi';
 export default function TicketOverviewAndPayment(params) {
   const { paymentConfirmation, setPaymentConfirmation } = useContext(UserContext);
   const token = useToken();
-  console.log(paymentConfirmation);
 
   const { selectTicket, selectHotel, ticket } = params;
 

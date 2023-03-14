@@ -13,7 +13,6 @@ export default function RoomCard({ roomName, roomCapacity, roomId, guestsNumber 
 
   useEffect(() => {
     if(guestsNumber) {
-      console.log(guestsNumber);
       const guestRoom = guestsNumber.filter((g) => roomId===g.id);
       let { guests } = guestRoom[0];
 

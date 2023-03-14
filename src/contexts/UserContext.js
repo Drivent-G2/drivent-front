@@ -12,6 +12,8 @@ export function UserProvider({ children }) {
   const [selectTicket, setSelectTicket] = React.useState(0);
   const [selectHotel, setSelectHotel] = useLocalStorage('selectHotel', 0);
 
+  const [ticketIsRemote, setTicketIsRemote] = useLocalStorage('ticketIsRemote', false);
+
   return (
     <UserContext.Provider
       value={{
@@ -25,6 +27,9 @@ export function UserProvider({ children }) {
         setSelectTicket,
         selectHotel,
         setSelectHotel,
+
+        ticketIsRemote,
+        setTicketIsRemote
       }}
     >
       {children}
