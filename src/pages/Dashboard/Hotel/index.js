@@ -73,6 +73,7 @@ const Title = styled.div`
 
 const HotelContainer = styled.div`
   width: 100%;
+  height: 60%;
   .center {
     width: 100%;
     height: 100%;
