@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import UserContext from '../../contexts/UserContext';
 
 export default function TicketTypes(params) {
   const { ticketsTypeList, setSelectTicket, selectTicket } = params;
 
   const [ticketsList, setTicketsList] = React.useState([]);
+
+  const { setTicketIsRemote } = useContext(UserContext);
   
   useEffect(() => {
     if(!ticketsTypeList) {
@@ -26,7 +29,7 @@ export default function TicketTypes(params) {
           );
         } else {
           return (
-            <div className="ticket dontSelectTicket" key={t.id} onClick={() => setSelectTicket(t)} >
+            <div className="ticket dontSelectTicket" key={t.id} onClick={() => { setSelectTicket(t); setTicketIsRemote(t.isRemote);  }} >
               <h1>{t.name}</h1>
               <h2>R$ {t.price},00</h2>
             </div>

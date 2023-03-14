@@ -3,21 +3,35 @@ import styled from 'styled-components';
 import UserContext from '../../../contexts/UserContext';
 
 export default function Activities() {
-  const { paymentConfirmation } = useContext(UserContext);
-  console.log('toma a confirmação:', paymentConfirmation);
+  const { paymentConfirmation, ticketIsRemote } = useContext(UserContext);
+  console.log(ticketIsRemote);
 
-  if(!paymentConfirmation) {
-    return(
-      <>
-        <Title>Escolha de atividades</Title>
-        <ActivitiesContainer>
-          {(!paymentConfirmation) && (
-            <h1 className="advise">Você precisa ter confirmado o pagamento antes de fazer a escolha de atividades</h1>
-          )}
-        </ActivitiesContainer>
-      </>
-    );
-  };
+  return(
+    <>
+      <Title>Escolha de atividades</Title>
+      <ActivitiesContainer>
+        {(!paymentConfirmation) && (
+          <h1 className="advise">Você precisa ter confirmado o pagamento antes de fazer a escolha de atividades</h1>
+        )}
+
+        {(!paymentConfirmation && ticketIsRemote) && (
+          <h1 className="advise">Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades</h1>
+        )}
+
+        {(paymentConfirmation && ticketIsRemote) && (
+
+        //favor apagar esse componente para adicionar a feature com as atividades
+
+          <h1 className="advise">
+            Sua modalidade de ingresso é online e o seu pagamento está confirmado. <br/>
+            Aqui irão aparecer todas as atividades do evento!
+            <br/>(em breve)
+          </h1>
+        )}
+
+      </ActivitiesContainer>
+    </>
+  );
 }
 
 const Title = styled.div`

@@ -27,9 +27,7 @@ export default function Payment() {
       if (!ticketData) {
         setIsTicketComplete(false);
       } else {
-        console.log(ticket);
         setTicket(ticketData);
-        console.log(ticket);
         setSelectTicket(ticketData.TicketType);
         setIsTicketComplete(true);
       }
@@ -71,6 +69,7 @@ export default function Payment() {
 
 const TicketAndPayment = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const Title = styled.div`
@@ -85,7 +84,7 @@ const Title = styled.div`
 
 const PaymentContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 60%;
   .center {
     width: 100%;
     height: 100%;
