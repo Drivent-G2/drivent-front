@@ -5,11 +5,12 @@ import UserContext from '../../../contexts/UserContext';
 
 export default function Activities() {
   const { paymentConfirmation, ticketIsRemote } = useContext(UserContext);
+  console.log(ticketIsRemote);
 
   return(
     <>
+      <Title>Escolha de atividades</Title>
       <ActivitiesContainer>
-        <Title>Escolha de atividades</Title>
         {(!paymentConfirmation) && (
           <h1 className="advise">Você precisa ter confirmado o pagamento antes de fazer a escolha de atividades</h1>
         )}
@@ -21,7 +22,12 @@ export default function Activities() {
         {(paymentConfirmation && ticketIsRemote) && (
 
         //favor apagar esse componente para adicionar a feature com as atividades
-          <ActivitiesComponent/>
+
+          <h1 className="advise">
+            Sua modalidade de ingresso é online e o seu pagamento está confirmado. <br/>
+            Aqui irão aparecer todas as atividades do evento!
+            <br/>(em breve)
+          </h1>
         )}
 
       </ActivitiesContainer>
