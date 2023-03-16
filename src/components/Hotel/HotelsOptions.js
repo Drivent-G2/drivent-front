@@ -19,7 +19,7 @@ export default function HotelsOptions(params) {
           if(h.id === hotelSelectedId) {
             return(
               <Option key={h.id} select={true} onClick={showRoomInfo}>
-                <HotelInfo h={h} />
+                <HotelInfo h={h} hotelSelectedId={hotelSelectedId}/>
               </Option>
             );
           }

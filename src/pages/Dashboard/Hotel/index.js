@@ -1,26 +1,24 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import styled from 'styled-components';
+import useToken from '../../../hooks/useToken';
+import { useUserBooking } from '../../../hooks/api/useUserBooking';
 import HotelChoiceContainer from '../../../components/Hotel';
 import RoomInfo from '../../../components/Hotel/RoomInfo';
-import BookingContext from '../../../contexts/BookingContext';
 import hotelContext from '../../../contexts/HotelContext';
 import UserContext from '../../../contexts/UserContext';
-import { useUserBooking } from '../../../hooks/api/useUserBooking';
-import useToken from '../../../hooks/useToken';
-import { getEveryBooking } from '../../../services/bookingApi';
 import { getPersonalInformations } from '../../../services/enrollmentApi';
-import { getHotelWithRooms } from '../../../services/hotelApi';
 import { getTicketPaymentStatus } from '../../../services/paymentApi';
+import styled from 'styled-components';
+import BookingContext from '../../../contexts/BookingContext';
 
 export default function Hotel() {
   const token = useToken();
-  const { isHotelSelected, hotelSelectedId } = useContext(hotelContext);
+  const { roomTypeAvailable } = useContext(BookingContext);
+  const { isHotelSelected } = useContext(hotelContext);
   const { userData, ticket, paymentConfirmation, setPaymentConfirmation, selectHotel, selectTicket } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
   const [confirmBooking, setConfirmBooking] = useState(false);
-  const [selectedBookingHotel, setSelectedBookingHotel] = useState(0);
   const [peopleNumber, setPeopleNumber] = useState(0);
 
   let isUserBooked = useUserBooking();
@@ -29,13 +27,12 @@ export default function Hotel() {
     try {
       await getTicketPaymentStatus(token, ticket.id);
       setPaymentConfirmation(true);
+
       await getPersonalInformations(userData.token);
       setEnroll(true);
+
       if (isUserBooked) {
-        const hotel = await getHotelWithRooms(token, hotelSelectedId);
-        const booking = await getEveryBooking(token, hotelSelectedId);
-        setPeopleNumber(booking.length);
-        setSelectedBookingHotel(hotel);
+        setPeopleNumber(isUserBooked.Room.capacity - 1);
         setConfirmBooking(true);
       } else {
         setConfirmBooking(false);
@@ -74,11 +71,11 @@ export default function Hotel() {
         <>
           <Title>Você já escolheu seu quarto:</Title>
           <HotelOverview>
-            <img src={selectedBookingHotel.image} alt="" />
-            <h1> {selectedBookingHotel.name} </h1>
+            <img src={isUserBooked.Hotel.image} alt="" />
+            <h1> {isUserBooked.Hotel.name} </h1>
             <div>
               <h2>Quarto reservado</h2>
-              <h3>Single e Double</h3>
+              <h3>{roomTypeAvailable}</h3>
             </div>
             <div>
               <h2>Pessoas no seu quarto</h2>
