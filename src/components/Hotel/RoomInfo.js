@@ -22,7 +22,6 @@ export default function RoomInfo() {
     await postBooking(token, { roomId: selectedRoom, hotelId: hotelSelectedId });
     setConfirmBooking(true);
   }
-  console.log(confirmBooking);
 
   useEffect(() => {
     setGuestsNumber(roomsGuests);
