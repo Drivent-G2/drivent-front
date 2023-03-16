@@ -12,7 +12,7 @@ import RoomCard from './RoomCard';
 export default function RoomInfo() {
   const token = useToken();
   const { hotelSelectedId } = useContext(hotelContext);
-  const { selectedRoom, setConfirmBooking, confirmBooking } = useContext(BookingContext);
+  const { selectedRoom, setConfirmBooking } = useContext(BookingContext);
   const [guestsNumber, setGuestsNumber] = useState([]);
 
   const Rooms = useHotelRooms(hotelSelectedId) || [];
@@ -34,20 +34,14 @@ export default function RoomInfo() {
       <RoomOptions>
         {Rooms.map((r, i) => {
           return (
-            <RoomCard guestsNumber={guestsNumber} roomId={r.id} key={i}roomName={r.name} roomCapacity={r.capacity} />
+            <RoomCard guestsNumber={guestsNumber} roomId={r.id} key={i} roomName={r.name} roomCapacity={r.capacity} />
           );
         })}
       </RoomOptions>
-      {selectedRoom?
-        <Book onClick={bookRoom}>
-          RESERVAR QUARTO
-        </Book>
-        :
-        ''
-      }
+      {selectedRoom ? <Book onClick={bookRoom}>RESERVAR QUARTO</Book> : ''}
     </RoomContainer>
   );
-};
+}
 
 const RoomContainer = styled.div`
   margin-top: 50px;
@@ -64,7 +58,7 @@ const Book = styled.button`
   margin-top: 50px;
   width: 182px;
   height: 37px;
-  background: #E0E0E0;
+  background: #e0e0e0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   border: none;
