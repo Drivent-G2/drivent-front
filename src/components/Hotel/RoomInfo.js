@@ -4,7 +4,6 @@ import BookingContext from '../../contexts/BookingContext';
 import hotelContext from '../../contexts/HotelContext';
 import { useEveryBooking } from '../../hooks/api/useEveryBooking';
 import { useHotelRooms } from '../../hooks/api/useHotelRooms';
-import { useUserBooking } from '../../hooks/api/useUserBooking';
 import useToken from '../../hooks/useToken';
 import { postBooking } from '../../services/bookingApi';
 import RoomCard from './RoomCard';
@@ -20,9 +19,10 @@ export default function RoomInfo() {
   const roomsGuests = useEveryBooking(hotelSelectedId);
 
   async function bookRoom() {
-    await postBooking(token, { roomId: selectedRoom });
+    await postBooking(token, { roomId: selectedRoom, hotelId: hotelSelectedId });
     setConfirmBooking(true);
   }
+  console.log(confirmBooking);
 
   useEffect(() => {
     setGuestsNumber(roomsGuests);
