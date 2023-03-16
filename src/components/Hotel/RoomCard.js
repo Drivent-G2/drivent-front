@@ -7,60 +7,58 @@ import BookingContext from '../../contexts/BookingContext';
 
 export default function RoomCard({ roomName, roomCapacity, roomId, guestsNumber }) {
   const [capacityArr, setCapacityArr] = useState([]);
-  const { selectedRoom, setSelectedRoom } = useContext(BookingContext);
+  const { selectedRoom, setSelectedRoom, setPeopleNumber } = useContext(BookingContext);
   const [button, setButton] = useState(false);
   const [color, setColor] = useState('white');
 
   useEffect(() => {
-    if(guestsNumber) {
-      const guestRoom = guestsNumber.filter((g) => roomId===g.id);
+    if (guestsNumber) {
+      const guestRoom = guestsNumber.filter((g) => roomId === g.id);
       let { guests } = guestRoom[0];
+      console.log(guests);
+      if (roomCapacity === guests) setButton(true);
 
-      if(roomCapacity===guests)
-        setButton(true);
-
-      if(selectedRoom!==roomId)
-        setColor('white');
+      if (selectedRoom !== roomId) setColor('white');
 
       const iconArr = [];
 
-      for(let cont=0; cont<roomCapacity; cont++) {
-        if (guests>0) {
-          iconArr.push(<img key={cont} src={personBlack} alt='person-black'/>);
+      for (let cont = 0; cont < roomCapacity; cont++) {
+        if (guests > 0) {
+          iconArr.push(<img key={cont} src={personBlack} alt="person-black" />);
           guests--;
-        }
-        else if(cont===roomCapacity-1 && selectedRoom===roomId) {
-          iconArr.push(<img key={cont} src={personPink} alt='person-pink'/>);
+        } else if (cont === roomCapacity - 1 && selectedRoom === roomId) {
+          iconArr.push(<img key={cont} src={personPink} alt="person-pink" />);
           setColor('#FFEED2');
-        }
-        else
-          iconArr.push(<img key={cont} src={person} alt='person-white'/>);
+          setPeopleNumber(guests);
+        } else iconArr.push(<img key={cont} src={person} alt="person-white" />);
       }
 
       setCapacityArr(iconArr);
     }
   }, [guestsNumber, selectedRoom]);
 
-  return(
+  return (
     <>
-      {button?
+      {button ? (
         <CardContainer disabled>
-          <h2 className='roomName'>{roomName}</h2>
-          <div className='capacity'>
-            {capacityArr.map((c, i) => c)}
-          </div>
+          <h2 className="roomName">{roomName}</h2>
+          <div className="capacity">{capacityArr.map((c, i) => c)}</div>
         </CardContainer>
-        :
-        <CardContainer onClick={() => {setSelectedRoom(roomId); setColor('#FFEED2');}} color={color}>
-          <h2 className='roomName'>{roomName}</h2>
-          <div className='capacity'>
-            {capacityArr.map((c, i) => c)}
-          </div>
+      ) : (
+        <CardContainer
+          onClick={() => {
+            setSelectedRoom(roomId);
+            setColor('#FFEED2');
+          }}
+          color={color}
+        >
+          <h2 className="roomName">{roomName}</h2>
+          <div className="capacity">{capacityArr.map((c, i) => c)}</div>
         </CardContainer>
-      }
+      )}
     </>
   );
-};
+}
 
 const CardContainer = styled.button`
   display: flex;
@@ -70,16 +68,16 @@ const CardContainer = styled.button`
   width: 190px;
   height: 45px;
   box-sizing: border-box;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   border-radius: 10px;
-  background-color: ${params => params.color};;
+  background-color: ${(params) => params.color};
   position: relative;
   cursor: pointer;
-  .capacity{
+  .capacity {
     display: flex;
     gap: 3px;
   }
-  .roomName{
+  .roomName {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
@@ -87,8 +85,8 @@ const CardContainer = styled.button`
     color: #454545;
   }
   &:disabled,
-  &[disabled]{
+  &[disabled] {
     opacity: 60%;
-    background: #E9E9E9;
+    background: #e9e9e9;
   }
 `;

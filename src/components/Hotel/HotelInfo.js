@@ -1,8 +1,11 @@
 // import styled from 'styled-components';
 import { findHotelWithRooms, getHotelsInfo } from '../../hooks/api/useHotel';
+import { useContext } from 'react';
+import BookingContext from '../../contexts/BookingContext';
 
 export default function HotelInfo(params) {
-  const { h } = params;
+  const { setRoomTypeAvailable } = useContext(BookingContext);
+  const { h, hotelSelectedId } = params;
   const hotelInfo = getHotelsInfo(h.id);
   const hotelType = findHotelWithRooms(h.id);
   let capacity = 0;
@@ -21,6 +24,10 @@ export default function HotelInfo(params) {
 
     if(capacity === 3) roomTypeAvalible = 'Single, Double e Triple';
     if(capacity === 2) roomTypeAvalible = 'Single, Double';
+
+    if(hotelSelectedId) {
+      setRoomTypeAvailable(roomTypeAvalible);
+    }
   }
 
   return(

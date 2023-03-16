@@ -9,7 +9,14 @@ export function HotelProvider({ children }) {
   const [hotelSelectedId, setHotelSelectedId] = useState(0);
 
   return (
-    <hotelContext.Provider value={{ isHotelSelected, setIsHotelSelected, hotelSelectedId, setHotelSelectedId }}>
+    <hotelContext.Provider
+      value={{
+        isHotelSelected,
+        setIsHotelSelected,
+        hotelSelectedId,
+        setHotelSelectedId
+      }}
+    >
       {children}
     </hotelContext.Provider>
   );
