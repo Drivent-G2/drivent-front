@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useGetAvailableDates } from '../../hooks/api/useGetAvailableDates';
+import Auditorys from './Auditory';
 import DateFilter from './DateFilter';
 
 export default function ActivitiesBody(params) {
@@ -8,7 +9,7 @@ export default function ActivitiesBody(params) {
   const [availableDaysList, setAvailableDaysList] = useState([]);
 
   useEffect(() => {
-    if(availableDatesList ?.length > 0) {
+    if( availableDatesList ?.length>0 ) {
       setAvailableDaysList(availableDatesList);
     }
   }, [availableDatesList]);
@@ -17,6 +18,7 @@ export default function ActivitiesBody(params) {
     <>
       <ActivitiesBodyContainer>
         <DateFilter availableDaysList={availableDaysList} />
+        <Auditorys/>
       </ActivitiesBodyContainer>
     </>
   );

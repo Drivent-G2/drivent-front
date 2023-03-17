@@ -5,8 +5,6 @@ export default function DateFilter(params) {
   const { availableDaysList } = params;
   const [daySelect, setDaySelect] = useState(0);
 
-  console.log('chegou no filter:', availableDaysList);
-
   return(
     <>
       { (daySelect === 0) && <h1>Primeiro, filtre pelo dia do evento:</h1>}
@@ -28,8 +26,8 @@ export default function DateFilter(params) {
 
 const AvailableDaysList = styled.div`
   width: 100%;
-  height: 200px;
   display: flex;
+  margin-bottom: 60px;
 `;
 
 const AvailableDay = styled.div`
