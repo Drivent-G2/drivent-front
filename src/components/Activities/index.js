@@ -1,36 +1,48 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useGetAvailableDates } from '../../hooks/api/useGetAvailableDates';
+import Auditorys from './Auditory';
 import DateFilter from './DateFilter';
 
-export default function ActivitiesComponent(params) {
+export default function ActivitiesBody(params) {
+  const [daySelect, setDaySelect] = useState(0);
+  const [dayActivities, setDayActivities] = useState([]);
+
   const availableDatesList = useGetAvailableDates();
   const [availableDaysList, setAvailableDaysList] = useState([]);
 
   useEffect(() => {
-    if(availableDatesList ?.length > 0) {
+    if (availableDatesList?.length > 0) {
       setAvailableDaysList(availableDatesList);
     }
   }, [availableDatesList]);
 
-  return(
+  return (
     <>
-      <ActivitiesBody>
-        <DateFilter availableDaysList={availableDaysList} />
-      </ActivitiesBody>
+      <ActivitiesBodyContainer>
+        <DateFilter
+          daySelect={daySelect}
+          setDaySelect={setDaySelect}
+          availableDaysList={availableDaysList}
+          setDayActivities={setDayActivities}
+        />
+        {daySelect !== 0 && (
+          <Auditorys daySelect={daySelect} dayActivities={dayActivities} />
+        )}
+      </ActivitiesBodyContainer>
     </>
   );
-};
+}
 
-const ActivitiesBody = styled.div`
-width:100%;
-height:100%;
-padding-top: 67px;
-box-sizing: border-box;
-h1 {
+const ActivitiesBodyContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-top: 67px;
+  box-sizing: border-box;
+  h1 {
     color: #8e8e8e;
     font-size: 20px;
     font-weight: 400;
     margin-bottom: 23px;
-}
+  }
 `;

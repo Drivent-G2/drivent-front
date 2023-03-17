@@ -14,12 +14,11 @@ import BookingContext from '../../../contexts/BookingContext';
 
 export default function Hotel() {
   const token = useToken();
-  const { roomTypeAvailable } = useContext(BookingContext);
+  const { roomTypeAvailable, peopleNumber } = useContext(BookingContext);
   const { isHotelSelected } = useContext(hotelContext);
   const { userData, ticket, paymentConfirmation, setPaymentConfirmation, selectHotel, selectTicket } = useContext(UserContext);
   const [enroll, setEnroll] = useState(false);
   const [confirmBooking, setConfirmBooking] = useState(false);
-  const [peopleNumber, setPeopleNumber] = useState(0);
 
   let isUserBooked = useUserBooking();
 
@@ -32,7 +31,6 @@ export default function Hotel() {
       setEnroll(true);
 
       if (isUserBooked) {
-        setPeopleNumber(isUserBooked.Room.capacity - 1);
         setConfirmBooking(true);
       } else {
         setConfirmBooking(false);
@@ -122,6 +120,7 @@ const HotelContainer = styled.div`
 `;
 
 const HotelOverview = styled.div`
+  margin-top: 35px;
   background-color: ${(params) => (params.select ? '#FFEED2' : '#EBEBEB')};
   width: 196px;
   height: 264px;
@@ -129,7 +128,6 @@ const HotelOverview = styled.div`
   box-sizing: border-box;
   margin-right: 19px;
   border-radius: 10px;
-  cursor: pointer;
   img {
     width: 168px;
     height: 109px;
