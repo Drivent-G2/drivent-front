@@ -49,7 +49,8 @@ const AvailableDay = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 400;
     color: #000;
     background-color: ${params => params.select? '#FFD37D' : '#e0e0e0' };
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
