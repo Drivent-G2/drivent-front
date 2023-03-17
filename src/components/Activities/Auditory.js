@@ -1,59 +1,66 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function Auditorys(params) {
+  const { daySelect, dayActivities } = params;
+  console.log(dayActivities);
+
   return(
-    <AuditoryList>
-      <div className='auditoryType'>
-        <h1 className='auditoryHeader'>Auditório Principal</h1>
-        <div className='activitiesBoxList'>
-          <Activity/>
-        </div>
-      </div>
+    <>
+      <AuditoryContainer>
+        
+        <AuditoryType>
+          <h1 className='auditoryTypeName'>Auditório Principal</h1>
+          <ActivitiesBoxList>
+            <div className='activity'></div>
+          </ActivitiesBoxList>
+        </AuditoryType>
 
-      <div className='auditoryType'>
-        <h1 className='auditoryHeader'>Auditório Lateral</h1>
-        <div className='activitiesBoxList'>
-          <Activity/>
-        </div>
-      </div>
+        <AuditoryType>
+          <h1 className='auditoryTypeName'>Auditório Lateral</h1>
+          <ActivitiesBoxList>
+            <div className='activity'></div>
+          </ActivitiesBoxList>
+        </AuditoryType>
 
-      <div className='auditoryType'>
-        <h1 className='auditoryHeader'>Sala de Workshop </h1>
-        <div className='activitiesBoxList'>
-          <Activity/>
-        </div>
-      </div>
-    </AuditoryList>
+        <AuditoryType>
+          <h1 className='auditoryTypeName'>Sala de Workshop</h1>
+          <ActivitiesBoxList>
+            <div className='activity'></div>
+          </ActivitiesBoxList>
+        </AuditoryType>
+
+      </AuditoryContainer>
+    </>
   );
 };
 
-const AuditoryList = styled.div`
+const AuditoryContainer = styled.div`
+  display: flex;
+`;
+
+const AuditoryType = styled.div`
+    width: 288px;
+    height: 390px;
     display: flex;
-    .auditoryType {
-        width: 288px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .auditoryHeader {
-            font-size: 17px;
-            color: #7b7b7b;
-            margin-bottom: 13px;
-        }
-        .activitiesBoxList {
-            width: 100%;
-            height: 390px;
-            border: 1px solid #d7d7d7;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 9px;
-        }
+    border: #7b7b7b;
+    flex-direction: column;
+    align-items: center;
+    .auditoryTypeName {
+        font-size: 17px;
+        color: #7b7b7b;
+        margin-bottom: 12px;
     }
 `;
 
-const Activity = styled.div`
-    width: 256px;
-    height: 79px;
-    background-color: #f1f1f1;
-    border-radius: 5px;
+const ActivitiesBoxList = styled.div`
+    display: flex;
+    flex-direction: column;
+    .activity {
+      width: 265px;
+      height: 79px;
+      background: #F1F1F1;
+      border-radius: 5px;
+    }
 `;
+

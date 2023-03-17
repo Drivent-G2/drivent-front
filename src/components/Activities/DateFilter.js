@@ -1,10 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import useToken from '../../hooks/useToken';
+import { getActivitiesByDay } from '../../services/activitiesApi';
 
 export default function DateFilter(params) {
-  const { availableDaysList } = params;
-  const [daySelect, setDaySelect] = useState(0);
+  const token = useToken();
+  const { availableDaysList, daySelect, setDaySelect, setDayActivities } = params;
 
+  useEffect(async() => {
+    try {
+      const activitiesData = await getActivitiesByDay(token, daySelect);
+      setDayActivities(activitiesData);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [daySelect]);
+  
   return(
     <>
       { (daySelect === 0) && <h1>Primeiro, filtre pelo dia do evento:</h1>}
