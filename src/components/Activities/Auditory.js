@@ -1,6 +1,10 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function Auditorys(params) {
+  const { daySelect, dayActivities } = params;
+  console.log(dayActivities);
+
   return(
     <>
       <AuditoryContainer>
@@ -50,7 +54,13 @@ const AuditoryType = styled.div`
 `;
 
 const ActivitiesBoxList = styled.div`
-    width: 100px;
-    height: 100px;
-    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    .activity {
+      width: 265px;
+      height: 79px;
+      background: #F1F1F1;
+      border-radius: 5px;
+    }
 `;
+

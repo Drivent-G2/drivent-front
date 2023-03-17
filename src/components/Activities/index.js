@@ -5,36 +5,44 @@ import Auditorys from './Auditory';
 import DateFilter from './DateFilter';
 
 export default function ActivitiesBody(params) {
+  const [daySelect, setDaySelect] = useState(0);
+  const [dayActivities, setDayActivities] = useState([]);
+
   const availableDatesList = useGetAvailableDates();
   const [availableDaysList, setAvailableDaysList] = useState([]);
-  
-  console.log('something');
 
   useEffect(() => {
-    if( availableDatesList ?.length>0 ) {
+    if (availableDatesList?.length > 0) {
       setAvailableDaysList(availableDatesList);
     }
   }, [availableDatesList]);
 
-  return(
+  return (
     <>
       <ActivitiesBodyContainer>
-        <DateFilter availableDaysList={availableDaysList} />
-        <Auditorys/>
+        <DateFilter
+          daySelect={daySelect}
+          setDaySelect={setDaySelect}
+          availableDaysList={availableDaysList}
+          setDayActivities={setDayActivities}
+        />
+        {daySelect !== 0 && (
+          <Auditorys daySelect={daySelect} dayActivities={dayActivities} />
+        )}
       </ActivitiesBodyContainer>
     </>
   );
-};
+}
 
 const ActivitiesBodyContainer = styled.div`
-width:100%;
-height:100%;
-padding-top: 67px;
-box-sizing: border-box;
-h1 {
+  width: 100%;
+  height: 100%;
+  padding-top: 67px;
+  box-sizing: border-box;
+  h1 {
     color: #8e8e8e;
     font-size: 20px;
     font-weight: 400;
     margin-bottom: 23px;
-}
+  }
 `;
