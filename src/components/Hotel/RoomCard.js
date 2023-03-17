@@ -5,17 +5,20 @@ import personBlack from '../../assets/images/person_black.png';
 import personPink from '../../assets/images/person_pink.png';
 import BookingContext from '../../contexts/BookingContext';
 
-export default function RoomCard({ roomName, roomCapacity, roomId, guestsNumber }) {
+export default function RoomCard({ roomName, roomCapacity, roomId, guestsNumber, rooms }) {
   const [capacityArr, setCapacityArr] = useState([]);
   const { selectedRoom, setSelectedRoom, setPeopleNumber } = useContext(BookingContext);
   const [button, setButton] = useState(false);
   const [color, setColor] = useState('white');
 
   useEffect(() => {
-    if (guestsNumber) {
-      const guestRoom = guestsNumber.filter((g) => roomId === g.id);
-      let { guests } = guestRoom[0];
-      console.log(guests);
+    setButton(false);
+    setColor(false);
+    if (guestsNumber) { 
+      let guestRoom = guestsNumber.filter((g) => roomId === g.id);
+      
+      let guests = guestRoom[0]?.guests;
+
       if (roomCapacity === guests) setButton(true);
 
       if (selectedRoom !== roomId) setColor('white');
@@ -35,7 +38,7 @@ export default function RoomCard({ roomName, roomCapacity, roomId, guestsNumber 
 
       setCapacityArr(iconArr);
     }
-  }, [guestsNumber, selectedRoom]);
+  }, [rooms, selectedRoom]);
 
   return (
     <>
