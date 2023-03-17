@@ -7,6 +7,8 @@ import DateFilter from './DateFilter';
 export default function ActivitiesBody(params) {
   const availableDatesList = useGetAvailableDates();
   const [availableDaysList, setAvailableDaysList] = useState([]);
+  
+  console.log('something');
 
   useEffect(() => {
     if( availableDatesList ?.length>0 ) {
