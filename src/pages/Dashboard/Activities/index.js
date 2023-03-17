@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import ActivitiesComponent from '../../../components/Activities';
+import ActivitiesBody from '../../../components/Activities';
 import UserContext from '../../../contexts/UserContext';
 
 export default function Activities() {
@@ -21,7 +21,7 @@ export default function Activities() {
         {(paymentConfirmation && ticketIsRemote) && (
 
         //favor apagar esse componente para adicionar a feature com as atividades
-          <ActivitiesComponent/>
+          <ActivitiesBody/>
         )}
 
       </ActivitiesContainer>

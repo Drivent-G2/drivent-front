@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useGetAvailableDates } from '../../hooks/api/useGetAvailableDates';
 import DateFilter from './DateFilter';
 
-export default function ActivitiesComponent(params) {
+export default function ActivitiesBody(params) {
   const availableDatesList = useGetAvailableDates();
   const [availableDaysList, setAvailableDaysList] = useState([]);
 
@@ -15,14 +15,14 @@ export default function ActivitiesComponent(params) {
 
   return(
     <>
-      <ActivitiesBody>
+      <ActivitiesBodyContainer>
         <DateFilter availableDaysList={availableDaysList} />
-      </ActivitiesBody>
+      </ActivitiesBodyContainer>
     </>
   );
 };
 
-const ActivitiesBody = styled.div`
+const ActivitiesBodyContainer = styled.div`
 width:100%;
 height:100%;
 padding-top: 67px;
