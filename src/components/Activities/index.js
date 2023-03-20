@@ -5,15 +5,16 @@ import Auditorys from './Auditory';
 import DateFilter from './DateFilter';
 
 export default function ActivitiesBody(params) {
-  const [daySelect, setDaySelect] = useState(0);
-  const [dayActivities, setDayActivities] = useState([]);
+  const [daySelect, setDaySelect] = useState(0);//
+  const availableDatesList = useGetAvailableDates();//
 
-  const availableDatesList = useGetAvailableDates();
+  const [dayActivities, setDayActivities] = useState([]);
   const [availableDaysList, setAvailableDaysList] = useState([]);
 
   useEffect(() => {
     if (availableDatesList?.length > 0) {
       setAvailableDaysList(availableDatesList);
+      console.log('cegou essa lista', availableDatesList);
     }
   }, [availableDatesList]);
 
@@ -26,6 +27,7 @@ export default function ActivitiesBody(params) {
           availableDaysList={availableDaysList}
           setDayActivities={setDayActivities}
         />
+        
         {daySelect !== 0 && (
           <Auditorys daySelect={daySelect} dayActivities={dayActivities} />
         )}

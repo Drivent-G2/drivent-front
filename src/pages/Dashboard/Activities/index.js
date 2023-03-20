@@ -20,9 +20,7 @@ export default function Activities() {
           <h1 className="advise">Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades</h1>
         )}
 
-        {(paymentConfirmation && !ticketIsRemote) && (
-
-        //favor apagar esse componente para adicionar a feature com as atividades
+        {(paymentConfirmation /*&& !ticketIsRemote*/) && (
           <ActivitiesBody/>
         )}
 

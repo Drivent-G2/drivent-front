@@ -1,66 +1,80 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
+import Activity from './Activity';
 
 export default function Auditorys(params) {
   const { daySelect, dayActivities } = params;
-  console.log(dayActivities);
 
   return(
-    <>
-      <AuditoryContainer>
-        
-        <AuditoryType>
-          <h1 className='auditoryTypeName'>Auditório Principal</h1>
-          <ActivitiesBoxList>
-            <div className='activity'></div>
-          </ActivitiesBoxList>
-        </AuditoryType>
+    <AuditoryList>
+      <div className='auditoryType'>
+        <h1 className='auditoryHeader'>Auditório Principal</h1>
 
-        <AuditoryType>
-          <h1 className='auditoryTypeName'>Auditório Lateral</h1>
-          <ActivitiesBoxList>
-            <div className='activity'></div>
-          </ActivitiesBoxList>
-        </AuditoryType>
+        <div className='activitiesBoxList'>
 
-        <AuditoryType>
-          <h1 className='auditoryTypeName'>Sala de Workshop</h1>
-          <ActivitiesBoxList>
-            <div className='activity'></div>
-          </ActivitiesBoxList>
-        </AuditoryType>
+          {dayActivities.map(atv => {
+            if(atv.dateId === daySelect && atv.auditoryId === 1) {
+              return (
+                <Activity atv={atv}/>
+              );
+            }
+          })}
 
-      </AuditoryContainer>
-    </>
+        </div>
+      </div>
+
+      <div className='auditoryType'>
+        <h1 className='auditoryHeader'>Auditório Lateral</h1>
+        <div className='activitiesBoxList'>
+
+          {dayActivities.map(atv => {
+            if(atv.dateId === daySelect && atv.auditoryId === 2) {
+              return (
+                <Activity atv={atv}/>
+              );
+            }
+          })}
+
+        </div>
+      </div>
+
+      <div className='auditoryType'>
+        <h1 className='auditoryHeader'>Sala de Workshop </h1>
+        <div className='activitiesBoxList'>
+
+          {dayActivities.map(atv => {
+            if(atv.dateId === daySelect && atv.auditoryId === 3) {
+              return (
+                <Activity atv={atv}/>
+              );
+            }
+          })}
+
+        </div>
+      </div>
+    </AuditoryList>
   );
 };
 
-const AuditoryContainer = styled.div`
-  display: flex;
-`;
-
-const AuditoryType = styled.div`
-    width: 288px;
-    height: 390px;
+const AuditoryList = styled.div`
     display: flex;
-    border: #7b7b7b;
-    flex-direction: column;
-    align-items: center;
-    .auditoryTypeName {
-        font-size: 17px;
-        color: #7b7b7b;
-        margin-bottom: 12px;
+    .auditoryType {
+        width: 288px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .auditoryHeader {
+            font-size: 17px;
+            color: #7b7b7b;
+            margin-bottom: 13px;
+        }
+        .activitiesBoxList {
+            width: 100%;
+            height: 390px;
+            border: 1px solid #d7d7d7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 9px;
+        }
     }
 `;
-
-const ActivitiesBoxList = styled.div`
-    display: flex;
-    flex-direction: column;
-    .activity {
-      width: 265px;
-      height: 79px;
-      background: #F1F1F1;
-      border-radius: 5px;
-    }
-`;
-
