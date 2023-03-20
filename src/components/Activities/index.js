@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useGetAvailableDates } from '../../hooks/api/useGetAvailableDates';
+import { useGetUserBookingActivities } from '../../hooks/api/useGetUserBookingActivities';
+
 import Auditorys from './Auditory';
 import DateFilter from './DateFilter';
 
 export default function ActivitiesBody(params) {
   const [daySelect, setDaySelect] = useState(0);//
   const availableDatesList = useGetAvailableDates();//
+  const userActivities = useGetUserBookingActivities();
 
   const [dayActivities, setDayActivities] = useState([]);
   const [availableDaysList, setAvailableDaysList] = useState([]);
@@ -14,7 +17,6 @@ export default function ActivitiesBody(params) {
   useEffect(() => {
     if (availableDatesList?.length > 0) {
       setAvailableDaysList(availableDatesList);
-      console.log('cegou essa lista', availableDatesList);
     }
   }, [availableDatesList]);
 
@@ -29,7 +31,7 @@ export default function ActivitiesBody(params) {
         />
         
         {daySelect !== 0 && (
-          <Auditorys daySelect={daySelect} dayActivities={dayActivities} />
+          <Auditorys daySelect={daySelect} dayActivities={dayActivities} userActivities={userActivities}/>
         )}
       </ActivitiesBodyContainer>
     </>

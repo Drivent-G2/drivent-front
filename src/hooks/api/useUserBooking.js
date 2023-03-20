@@ -6,7 +6,6 @@ export function useUserBooking() {
   const token = useToken();
 
   const booking = useAsync(() => getUserBooking(token));
-  console.log(booking);
   return booking.data;
 };
 

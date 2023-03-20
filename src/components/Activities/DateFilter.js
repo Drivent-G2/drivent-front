@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
 import { getActivitiesByDay } from '../../services/activitiesApi';

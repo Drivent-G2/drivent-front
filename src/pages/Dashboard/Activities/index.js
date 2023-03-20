@@ -6,8 +6,6 @@ import UserContext from '../../../contexts/UserContext';
 export default function Activities() {
   const { paymentConfirmation, ticketIsRemote } = useContext(UserContext);
 
-  console.log(paymentConfirmation, ticketIsRemote);
-
   return(
     <>
       <ActivitiesContainer>
