@@ -11,7 +11,6 @@ import { getPersonalInformations } from '../../../services/enrollmentApi';
 import { getTicketPaymentStatus } from '../../../services/paymentApi';
 import styled from 'styled-components';
 import BookingContext from '../../../contexts/BookingContext';
-import { getUserBooking } from '../../../services/bookingApi';
 
 export default function Hotel() {
   const token = useToken();
@@ -25,7 +24,6 @@ export default function Hotel() {
   let isUserBooked = useUserBooking();
 
   useEffect(async() => {
-    console.log(confirmBooking);
     try {
       await getTicketPaymentStatus(token, ticket.id);
       setPaymentConfirmation(true);

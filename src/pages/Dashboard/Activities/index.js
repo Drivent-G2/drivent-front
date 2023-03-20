@@ -6,8 +6,6 @@ import UserContext from '../../../contexts/UserContext';
 export default function Activities() {
   const { paymentConfirmation, ticketIsRemote } = useContext(UserContext);
 
-  console.log(paymentConfirmation, ticketIsRemote);
-
   return(
     <>
       <ActivitiesContainer>
@@ -20,7 +18,7 @@ export default function Activities() {
           <h1 className="advise">Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades</h1>
         )}
 
-        {(paymentConfirmation /*&& !ticketIsRemote*/) && (
+        {(paymentConfirmation && !ticketIsRemote) && (
           <ActivitiesBody/>
         )}
 

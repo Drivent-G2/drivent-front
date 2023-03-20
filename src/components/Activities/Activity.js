@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import { BiExit } from 'react-icons/bi';
 import { RxCrossCircled } from 'react-icons/rx';
+import useToken from '../../hooks/useToken';
 
 export default function Activity(params) {
-  const { atv } = params;
-
-  function reserveActivity(activityId) {
-    console.log(`O usuário quer fazer uma reserva da atividade: ${activityId}`);
-  }
+  const { atv, reserveActivity } = params;
+  const token = useToken();
 
   if(atv.capacity > 0) {
     return(
@@ -17,7 +15,7 @@ export default function Activity(params) {
           <span className='activityDuration'>{atv.startsAt/60}:00 - {atv.endsAt/60}:00</span>
         </div>
         <div className='vagas'>
-          {<BiExit onClick={ () => reserveActivity(atv.id) } /> }
+          {<BiExit onClick={ () => reserveActivity(token, atv.id) } /> }
           {atv.capacity} vagas
         </div>
       </ActivityComponent>
@@ -76,6 +74,7 @@ const ActivityComponent = styled.div`
         svg {
           font-size: 30px;
           margin-bottom: 3px;
+          cursor: pointer;
         }
     }
 `;
