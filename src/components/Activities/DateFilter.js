@@ -23,11 +23,11 @@ export default function DateFilter(params) {
         {availableDaysList.map(d => {
           if(daySelect === d.id) {
             return (
-              <AvailableDay select={true} onClick={() => setDaySelect(0)} >{d.dateName}</AvailableDay>
+              <AvailableDay key={d.id} select={true} onClick={() => setDaySelect(0)} >{d.dateName}</AvailableDay>
             );
           }
           return(
-            <AvailableDay select={false} onClick={() => setDaySelect(d.id)} >{d.dateName}</AvailableDay>
+            <AvailableDay key={d.id} select={false} onClick={() => setDaySelect(d.id)} >{d.dateName}</AvailableDay>
           );
         })}
       </AvailableDaysList>

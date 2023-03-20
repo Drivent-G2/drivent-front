@@ -3,19 +3,25 @@ import styled from 'styled-components';
 import BookingContext from '../../contexts/BookingContext';
 import hotelContext from '../../contexts/HotelContext';
 import useToken from '../../hooks/useToken';
-import { getEveryBooking, postBooking } from '../../services/bookingApi';
+import { getEveryBooking, postBooking, updateBooking } from '../../services/bookingApi';
 import { getHotelWithRooms } from '../../services/hotelApi';
 import RoomCard from './RoomCard';
 
 export default function RoomInfo() {
   const token = useToken();
   const { hotelSelectedId } = useContext(hotelContext);
-  const { selectedRoom, setConfirmBooking } = useContext(BookingContext);
+  const { selectedRoom, setConfirmBooking, update, bookingId } = useContext(BookingContext);
   const [guestsNumber, setGuestsNumber] = useState(null);
   const [rooms, setRooms] = useState([]);
 
   async function bookRoom() {
     await postBooking(token, { roomId: selectedRoom, hotelId: hotelSelectedId });
+    setConfirmBooking(true);
+  }
+
+  async function updateRoom() {
+    console.log(selectedRoom, bookingId);
+    await updateBooking(token, { roomId: selectedRoom }, bookingId);
     setConfirmBooking(true);
   }
 
@@ -37,7 +43,7 @@ export default function RoomInfo() {
           );
         })}
       </RoomOptions>
-      {selectedRoom ? <Book onClick={bookRoom}>RESERVAR QUARTO</Book> : ''}
+      {selectedRoom ? update ? <Book onClick={updateRoom}>TROCAR QUARTO</Book> : <Book onClick={bookRoom}>RESERVAR QUARTO</Book> : ''}
     </RoomContainer>
   );
 }

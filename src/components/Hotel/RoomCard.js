@@ -19,9 +19,11 @@ export default function RoomCard({ roomName, roomCapacity, roomId, guestsNumber,
       
       let guests = guestRoom[0]?.guests;
 
-      if (roomCapacity === guests) setButton(true);
+      if (roomCapacity === guests && selectedRoom !== roomId) setButton(true);
 
       if (selectedRoom !== roomId) setColor('white');
+
+      if (selectedRoom === roomId && guests === roomCapacity) {guests--; setButton(true);}
 
       const iconArr = [];
 

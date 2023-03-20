@@ -17,8 +17,9 @@ export default function Hotel() {
   const { roomTypeAvailable, peopleNumber } = useContext(BookingContext);
   const { isHotelSelected } = useContext(hotelContext);
   const { userData, ticket, paymentConfirmation, setPaymentConfirmation, selectHotel, selectTicket } = useContext(UserContext);
+  const { confirmBooking, setSelectedRoom, setUpdate, setBookingId, setConfirmBooking } = useContext(BookingContext);
   const [enroll, setEnroll] = useState(false);
-  const [confirmBooking, setConfirmBooking] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
 
   let isUserBooked = useUserBooking();
 
@@ -30,20 +31,28 @@ export default function Hotel() {
       await getPersonalInformations(userData.token);
       setEnroll(true);
 
-      if (isUserBooked) {
-        setConfirmBooking(true);
+      if (isUserBooked || confirmBooking) {
+        setShowBooking(true);
       } else {
-        setConfirmBooking(false);
+        setShowBooking(false);
       }
     } catch (err) {
       setEnroll(false);
       setPaymentConfirmation(false);
     }
-  }, [isUserBooked]);
+  }, [ isUserBooked, confirmBooking ]);
+
+  function updateRoom() {
+    setShowBooking(false);
+    setSelectedRoom(isUserBooked.Room.id);
+    setBookingId(isUserBooked.id);
+    setConfirmBooking(false);
+    setUpdate(true);
+  }
 
   return (
     <>
-      {!confirmBooking ? (
+      {!showBooking ? (
         <>
           <Title> Escolha de hotel e quarto </Title>
           <HotelContainer>
@@ -69,8 +78,8 @@ export default function Hotel() {
         <>
           <Title>Você já escolheu seu quarto:</Title>
           <HotelOverview>
-            <img src={isUserBooked.Hotel.image} alt="" />
-            <h1> {isUserBooked.Hotel.name} </h1>
+            <img src={isUserBooked?.Hotel.image} alt="" />
+            <h1> {isUserBooked?.Hotel.name} </h1>
             <div>
               <h2>Quarto reservado</h2>
               <h3>{roomTypeAvailable}</h3>
@@ -82,7 +91,7 @@ export default function Hotel() {
               {peopleNumber === 0 && <h3>Só você</h3>}
             </div>
           </HotelOverview>
-          <UpdateRoom>
+          <UpdateRoom onClick={updateRoom}>
             TROCAR DE QUARTO
           </UpdateRoom>
         </>

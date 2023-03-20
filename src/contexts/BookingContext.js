@@ -10,6 +10,8 @@ export function BookingProvider({ children }) {
   const [confirmBooking, setConfirmBooking] = useState(false);
   const [roomTypeAvailable, setRoomTypeAvailable] = useLocalStorage('Single');
   const [peopleNumber, setPeopleNumber] = useLocalStorage(0);
+  const [update, setUpdate] = useState(false);
+  const [bookingId, setBookingId] = useState(false);
 
   return (
     <BookingContext.Provider
@@ -21,7 +23,11 @@ export function BookingProvider({ children }) {
         roomTypeAvailable,
         setRoomTypeAvailable,
         peopleNumber,
-        setPeopleNumber
+        setPeopleNumber,
+        update,
+        setUpdate,
+        bookingId,
+        setBookingId
       }}
     >
       {children}
