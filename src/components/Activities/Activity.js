@@ -1,40 +1,38 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { BiExit } from 'react-icons/bi';
+import { RxCrossCircled } from 'react-icons/rx';
 
 export default function Activity(params) {
   const { atv } = params;
 
-  const { atvInfo, setAtvInfo } = useState({
-    id: 6,
-    dateId: 3,
-    auditoryId: 2,
-    startsAt: 540,
-    endsAt: 600,
-    capacity: 100,
-    Auditory: {
-      id: 2,
-      auditoryName: 'Auditório Lateral'
-    }
+  function reserveActivity(activityId) {
+    console.log(`O usuário quer fazer uma reserva da atividade: ${activityId}`);
   }
-  );
 
-  useEffect(() => {
-    // console.log('useEffect rodou', atv);
-    if(atv === undefined) console.log('caiu no undef');
-
-    if(atv !== undefined) console.log('caiu no if', atv);
-  }, [atv]);
-
-  //   console.log(atv);
+  if(atv.capacity > 0) {
+    return(
+      <ActivityComponent fullCapacity ={false} height={(atv.endsAt - atv.startsAt)/60} >
+        <div className='info'>
+          <span>{atv.name}</span>
+          <span className='activityDuration'>{atv.startsAt/60}:00 - {atv.endsAt/60}:00</span>
+        </div>
+        <div className='vagas'>
+          {<BiExit onClick={ () => reserveActivity(atv.id) } /> }
+          {atv.capacity} vagas
+        </div>
+      </ActivityComponent>
+    );
+  } 
 
   return(
-    <ActivityComponent>
+    <ActivityComponent fullCapacity ={true} >
       <div className='info'>
-        <span>Minecraft: montando pc ideal</span>
+        <span>{atv.name}</span>
         <span className='activityDuration'>9:00 - 10:00</span>
       </div>
       <div className='vagas'>
-        {atv.capacity}
+        {<RxCrossCircled/>}
+        {'Esgotado'}
       </div>
     </ActivityComponent>
   );
@@ -42,7 +40,7 @@ export default function Activity(params) {
 
 const ActivityComponent = styled.div`
     width: 265px;
-    height: 79px;
+    height: ${params => params.height > 0 ? (params.height * 80)+'px' : '79px' };
     background-color: #f1f1f1;
     border-radius: 5px;
     display: flex;
@@ -72,8 +70,12 @@ const ActivityComponent = styled.div`
         align-items: center;
         justify-content: center;
         height: 32px;
-        width: 40px;
         font-size: 9px;
-        color: #078632
+        color: ${params => params.fullCapacity ? '#CC6666' : '#078632' };
+        font-weight: 700;
+        svg {
+          font-size: 30px;
+          margin-bottom: 3px;
+        }
     }
 `;
