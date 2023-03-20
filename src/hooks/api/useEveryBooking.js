@@ -6,7 +6,6 @@ export function useEveryBooking(hotelId) {
   const token = useToken();
   
   const booking = useAsync(() => getEveryBooking(token, hotelId));
-
-  if(!booking.loading) 
-    return booking.data;
+  
+  return booking.data;
 }

@@ -2,13 +2,16 @@ import styled from 'styled-components';
 import HotelInfo from './HotelInfo';
 import { useContext } from 'react';
 import hotelContext from '../../contexts/HotelContext';
+import BookingContext from '../../contexts/BookingContext';
 
 export default function HotelsOptions(params) {
   const { hotelsOptionsList } = params;
   const { hotelSelectedId, setHotelSelectedId, setIsHotelSelected } = useContext(hotelContext);
+  const { setSelectedRoom } = useContext(BookingContext);
   
   function showRoomInfo() {
     setIsHotelSelected(true);
+    setSelectedRoom(false);
   }
 
   return(

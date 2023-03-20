@@ -2,39 +2,38 @@ import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import BookingContext from '../../contexts/BookingContext';
 import hotelContext from '../../contexts/HotelContext';
-import { useEveryBooking } from '../../hooks/api/useEveryBooking';
-import { useHotelRooms } from '../../hooks/api/useHotelRooms';
-import { useUserBooking } from '../../hooks/api/useUserBooking';
 import useToken from '../../hooks/useToken';
-import { postBooking } from '../../services/bookingApi';
+import { getEveryBooking, postBooking } from '../../services/bookingApi';
+import { getHotelWithRooms } from '../../services/hotelApi';
 import RoomCard from './RoomCard';
 
 export default function RoomInfo() {
   const token = useToken();
   const { hotelSelectedId } = useContext(hotelContext);
   const { selectedRoom, setConfirmBooking } = useContext(BookingContext);
-  const [guestsNumber, setGuestsNumber] = useState([]);
-
-  const Rooms = useHotelRooms(hotelSelectedId) || [];
-
-  const roomsGuests = useEveryBooking(hotelSelectedId);
+  const [guestsNumber, setGuestsNumber] = useState(null);
+  const [rooms, setRooms] = useState([]);
 
   async function bookRoom() {
-    await postBooking(token, { roomId: selectedRoom });
+    await postBooking(token, { roomId: selectedRoom, hotelId: hotelSelectedId });
     setConfirmBooking(true);
   }
 
-  useEffect(() => {
+  useEffect(async() => {
+    const roomsGuests = await getEveryBooking(token, hotelSelectedId);
     setGuestsNumber(roomsGuests);
-  }, [roomsGuests]);
+    const { Rooms } = await getHotelWithRooms(token, hotelSelectedId);
+    
+    setRooms(Rooms);
+  }, [hotelSelectedId]);
 
   return (
     <RoomContainer>
-      <h1 className="title">Ótima pedida! Agora escolha seu quarto:</h1>
+      <h1 className="title">Ótima pedida! Agora escolha seu quarto:<span>{hotelSelectedId}</span></h1>
       <RoomOptions>
-        {Rooms.map((r, i) => {
+        {rooms.map((r, i) => {
           return (
-            <RoomCard guestsNumber={guestsNumber} roomId={r.id} key={i} roomName={r.name} roomCapacity={r.capacity} />
+            <RoomCard rooms={rooms} guestsNumber={guestsNumber} roomId={r.id} key={i} roomName={r.name} roomCapacity={r.capacity} />
           );
         })}
       </RoomOptions>
